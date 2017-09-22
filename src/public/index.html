@@ -7,58 +7,10 @@
   </head>
   <body>
     <h1>Welcome to Store Search</h1>
-    <div id="greeting">
-        <h2>Please enter your name</h2>
-        <input v-model="name" @keyup.enter="addName" placeholder="your name">
-        <button v-on:click="addName"> Add Name</button>
-        <h2>{{name}}'s Grocery List</h2>
-        <input type="text" placeholder="grocery item" v-model="item">
-        <button v-on:click="addItem">Add item</button>
-    </div>
-    <div>
-        <ul>
-            <grocery-item
-                v-for="item in items">
-            </grocery-item>
-        </ul>
-    </div>
-    <script src="https://unpkg.com/vue"></script>
-    <script>  
-
-        Vue.component('grocery-item', {
-            template: '<li>{{ item }}</li>'
-        })        
-
-        var greeting = new Vue({
-            el: '#greeting',
-            data: {
-                name: '',
-                item: '',
-                items: []
-              
-            },
-            methods: {
-                addItem: function(e) {
-                    this.items.push(this.item); 
-                    this.item = '';     
-                },
-                addName: function() {
-                    var value = this.name;
-                    if (!value) {
-                      return;
-                    }
-                    else {
-                        userData.name = value;
-                    }
-                }
-            }
-        });
-
-       
-
-     
-    </script>
+   
   </body>
   
-  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.8/handlebars.min.js"></script>
+  <script src="js/app.js" type="text/javascript"></script>
 </html>
