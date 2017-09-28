@@ -7,7 +7,21 @@
   </head>
   <body>
     <h1>Welcome to Store Search</h1>
-   
+   <h2>Please enter your name</h2>
+   <input id="name" type="text">
+   <button id="nameButton">GO!</button>
+   <script id="userName" type="text/x-handlebars-template">
+        <h2>Welcome {{name}}!</h2>
+   </script>
+   <script id="list-template" type="text/x-handlebars-template">
+    <ul class="list-group">
+      {{#each files}}
+      <li class="list-group-item">
+        <strong>{{title}}</strong> - {{description}}
+      </li>
+      {{/each}}
+    </ul>
+  </script>
   </body>
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
