@@ -3,7 +3,7 @@ const express = require('express');
 const config = require('./config');
 const path = require('path');
 const router = require('./routes');
-const expressHBS = require('express-handlebars');
+
 
 
 // Create the application object
