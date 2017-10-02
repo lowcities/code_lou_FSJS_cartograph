@@ -43,17 +43,22 @@
                         </form>
                     </div>
                     <script id="list-template" type="text/x-handlebars-template">
-                        <ul class="groceryList">
                         {{#each lists}}
-                        <!-- <h2>{{userName}}</h2> -->
-                        <li class="groceryItem">
-                            <strong>{{itemName}}</strong>
-                            <span>
-                                <button type="button" class="edit-btn">Edit</button>
-                            </span>
-                        </li>
+                            <h2>{{name}}</h2>
+                            {{#each groceryList}}
+                            <div>
+                                <ul class="groceryList">
+                                    <li class="groceryItem">
+                                        <strong>{{itemName}}</strong>
+                                        <span>
+                                            <button type="button" class="edit-btn">Edit</button>
+                                        </span>
+                                    </li>
+                                </ul>    
+                            </div> 
+                            {{/each}}
                         {{/each}}
-                        </ul>
+                       
                     </script>
                 </div>
             </div>

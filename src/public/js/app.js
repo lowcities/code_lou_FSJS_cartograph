@@ -35,6 +35,7 @@ button.addEventListener('click', () => {
     refreshListDb();
 });
 
+
 function addItem() {
     const item = $('#item-name').val();
     const itemData = {
@@ -58,7 +59,7 @@ console.log(itemData);
         });
 }
     
-
+// Retrieve information from the database
 function getLists() {
     return $.ajax('/api/list')
       .then(res => {

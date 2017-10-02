@@ -1,4 +1,9 @@
 [
+ { 
+    "name": "David",
+
+    "groceryList": [
+
     {
        "itemName": "Apple"
     },
@@ -8,5 +13,6 @@
     {
         "itemName": "Fish"
     }
-
+    ]
+}
 ]
