@@ -1,12 +1,17 @@
+
 const nameInput = document.getElementById('name');
 const button = document.getElementById('nameButton');
+const nameIntro = document.getElementById('nameInput');
+const welcomeMessage = document.getElementById('welcome');
+const listContainer = document.getElementById('list-container');
+const itemList = document.getElementById('item-list');
 
 // Info entered eg. Name, grocery items
 var userInfo = {
     "name" : nameInput
 }
 
-// Handlebards templates
+// Handlebars templates
 const nameTemplate = $('#userName').html();
 const listTemplate = $('#groceryList').html();
 
@@ -17,32 +22,66 @@ const nameTemplateScript = Handlebars.compile(nameTemplate);
 button.addEventListener('click', () => {
     let name = nameInput.value;
     userInfo.name = name;
-    let nameHTML = nameTemplateScript(userInfo);
-    $(document.body).append(nameHTML);
+    if (!name) {
+        let error = `<h2>Please enter a valid name</h2>`;
+        welcomeMessage.innerHTML = error;
+    } else {
+        let nameHTML = nameTemplateScript(userInfo);
+        nameIntro.classList.add('fade');
+        welcomeMessage.innerHTML = nameHTML;
+    }
+    welcomeMessage.classList.add('show-welcome');
+    itemList.classList.add('item-list-show');
+    refreshListDb();
 });
 
-function getFiles() {
-    return $.ajax('/api/file')
+function addItem() {
+    const item = $('#item-name').val();
+    const itemData = {
+        itemName: item
+    };
+console.log(itemData);
+
+    $.ajax({
+        type: "POST",
+        url: '/api/list',
+        data: JSON.stringify(itemData),
+        dataType: 'json',
+        contentType: 'application/json'
+    })
+        .done(function(response) {
+            console.log("We have posted the data");
+            refreshListDb();
+        })
+        .fail(function(error) {
+            console.log("It didnt post.", error);
+        });
+}
+    
+
+function getLists() {
+    return $.ajax('/api/list')
       .then(res => {
-        console.log("Results from getFiles()", res);
+        console.log("Results from getLists()", res);
         return res;
       })
       .fail(err => {
-        console.log("Error in getFiles()", err);
+        console.log("Error in getLists()", err);
         throw err;
       });
   }
 
-function refreshFileList() {
-    const template = $('#list-template').html();
-    const compiledTemplate = Handlebars.compile(template);
+function refreshListDb() {
+    const listTemplate = $('#list-template').html();
+    const compiledTemplate = Handlebars.compile(listTemplate);
   
-    getFiles()
-      .then(files => {
-        const data = {files: files};
+    getLists()
+      .then(lists => {
+        const data = {lists: lists};
         const html = compiledTemplate(data);
-        $('#list-container').html(html);
-      })
+        $(listContainer).append(html);
+        
+      });
   }
 
-window.addEventListener('load', refreshFileList);
+// window.addEventListener('load', refreshListDb);

@@ -1,0 +1,142 @@
+body {
+    background-color: black;
+    min-height: 100vh;
+}
+header {
+    margin-bottom: 10%;
+}
+
+h1, h2 {
+    font-family: 'Righteous', cursive;
+    color: white;
+}
+
+.title {
+    font-size: 2rem;
+    margin: 0 auto;
+    width: 100%;
+    text-align: center;
+}
+
+#body-backdrop {
+    background: url('../img/cart.jpg')center no-repeat;
+    background-size: cover;
+    position: relative;
+    padding-bottom: 100%;
+    z-index: 1;
+}
+#overlay {
+    background-color: rgba(0,0,0, 0.4);
+    position: absolute;
+    top: 0; left: 0; bottom: 0;
+    width: 100%;
+    z-index: 2;
+}
+
+/*          Form Elements
+========================================================== */
+
+input {
+    background-color: transparent;
+    border: 0;
+    border-bottom: 2px solid;
+    color: white;
+    display: block;
+    font-size: 1.8rem;
+    letter-spacing: -1px;
+    margin: 0 auto;
+    outline: 0;
+    padding: 5px 20px;
+    text-align: center;
+    transition: all 0.3s;
+    width: 200px;
+}
+button {
+    background-color: transparent;
+    border: 2px solid white;
+    border-radius: 27px;
+    color: white;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 20px;
+    padding: 15px 20px;
+    text-transform: uppercase;
+    transition: all 200ms;
+}
+
+
+
+/*          Intro Section
+========================================================== */
+
+.intro-container {
+    position: relative;
+}
+
+.nameInput {
+    position: absolute;
+    margin: 0 auto;
+    /* left: 30%; */
+    width: 100%;
+    text-align: center;
+        -webkit-transform: translateX(0%);
+        transform: translateX(0%);
+    /* -webkit-transform: translateX(-100%) scale(0.25); */
+        -webkit-transition: all .5s;
+        -webkit-transition: all .9s cubic-bezier(0.6, -0.28, 0.735, 0.045);
+    transition: all .9s cubic-bezier(0.6, -0.28, 0.735, 0.045);
+}
+.fade {
+    -webkit-transform: translateX(-250%);
+    transform: translateX(-250%);
+}
+.welcome {
+    position: relative;
+    /* margin: 0 auto; */
+    margin-bottom: 100px;
+    width: 100%;
+    text-align: center;
+    -webkit-transform: translateY(85%);
+    transform: translateY(85%);
+    transition: all .9s cubic-bezier(0.6, -0.28, 0.735, 0.045);
+    opacity: 0;
+}
+.show-welcome {
+    -webkit-transform: translateY(45%);
+    transform: translateY(45%);
+    opacity: 1;
+}
+/*          List Section
+========================================================== */
+#list-container {
+    margin: 0 auto;
+    width: 100%;
+}
+.groceryList {
+    list-style: none;
+    text-align: center;
+}
+.groceryItem {
+    background-color: transparent;
+    color: white;
+}
+.add-item-btn {
+    
+    margin-left: 15px;
+    padding: 7px;
+}
+.edit-btn {
+    font-size: .5rem;
+    padding: 2px;
+}
+.item-list {
+    display: none;
+    transition: all 500 ease;
+    
+}
+.item-list-show {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    
+}

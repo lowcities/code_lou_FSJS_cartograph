@@ -1,60 +1,67 @@
 // Create a router object to export to server.js
 const router = require('express').Router();
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const List = require('../models/list.model');
 
-// Dummy data for testing
-const FILES = [
-    {id: 'a', title: 'cutecat1.jpg', description: 'A cute cat'},
-    {id: 'b', title: 'uglycat1.jpg', description: 'Just kidding, all cats are cute'},
-    {id: 'c', title: 'total_recall_poster.jpg', description: 'Quaid, start the reactor...'},
-    {id: 'd', title: 'louisville_coffee.txt', description: 'Coffee shop ratings'},
-  ];
-
-
-// GET all files
-router.get('/file', function(req, res, next) {
-    res.json(FILES);
+// GET all lists
+router.get('/list', function(req, res, next) {
+    List.find({}, function(err, lists) {
+        if (err) {
+          console.log(err);
+          res.status(500).json(err);
+        }
+      
+        res.json(lists);
+      });
 });
 
-// Create a new file
-router.post('/file', function(req, res, next) {
-    const newId = '' + FILES.length;
-    const data = req.body;
-    data.id = newId;
-  
-    FILES.push(data);
-    res.status(201).json(data);
+// Create a new list
+router.post('/list', function(req, res, next) {
+    const listData = {
+        itemName: req.body.itemName
+    };
+    console.log(listData);
+    
+    List.create(listData, function(err, newList) {
+        if (err) {
+            console.log(err);
+            return res.status(500).json(err);
+        }
+        res.json(newList);
+    });
   });
 
-// update an exsisting file
-router.put('/file/:fileId', function(req, res, next) {
-    const {fileId} = req.params;
-    const file = FILES.find(entry => entry.id === fileId);
-    if (!file) {
-      return res.status(404).end(`Could not find file '${fileId}'`);
+// update an exsisting list
+router.put('/list/:listId', function(req, res, next) {
+    const {listId} = req.params;
+    const list = lists.find(entry => entry.id === listId);
+    if (!list) {
+      return res.status(404).end(`Could not find list '${listId}'`);
     }
   
-    file.title = req.body.title;
-    file.description = req.body.description;
-    res.json(file);
+    list.title = req.body.title;
+    list.description = req.body.description;
+    res.json(list);
   })
   
-// delete an exsisting file
-router.delete('/file/:fileId', function(req, res, next) {
-    res.end(`Deleting file '${req.params.fileId}'`);
+// delete an exsisting list
+router.delete('/list/:listId', function(req, res, next) {
+    res.end(`Deleting list '${req.params.listId}'`);
 });
 
-// GET a specific file
-router.get('/file/:fileId', function(req, res, next) {
-    const {fileId} = req.params; // same as 'const fileId = req.params.fileId'
+// GET a specific list
+router.get('/list/:listId', function(req, res, next) {
+    const {listId} = req.params; // same as 'const listId = req.params.listId'
     
-    // for each entry in FILES find the first entry id that matches the value of fileID
-    const file = FILES.find(entry => entry.id === fileId);
-    // if file cannot be found
-    if (!file) {
-      return res.status(404).end(`Could not find file '${fileId}'`);
+    // for each entry in lists find the first entry id that matches the value of listID
+    const list = lists.find(entry => entry.id === listId);
+    // if list cannot be found
+    if (!list) {
+      return res.status(404).end(`Could not find list '${listId}'`);
     }
   
-    res.json(file);
+    res.json(list);
 });
 
 module.exports = router;
