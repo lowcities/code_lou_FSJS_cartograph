@@ -44,21 +44,18 @@
                     </div>
                     <script id="list-template" type="text/x-handlebars-template">
                         {{#each lists}}
-                            <h2>{{name}}</h2>
-                            {{#each groceryList}}
-                            <div>
-                                <ul class="groceryList">
-                                    <li class="groceryItem">
-                                        <strong>{{itemName}}</strong>
-                                        <span>
-                                            <button type="button" class="edit-btn">Edit</button>
-                                        </span>
-                                    </li>
-                                </ul>    
-                            </div> 
-                            {{/each}}
+                        <h2>{{name}}</h2>
+                            <ul class="groceryList">
+                                {{#each groceryList}}
+                                <li class="groceryItem">
+                                    <strong>{{itemName}}</strong>
+                                    <span>
+                                        <button type="button" class="edit-btn">Edit</button>
+                                    </span>
+                                </li>
+                                {{/each}}
+                            </ul>    
                         {{/each}}
-                       
                     </script>
                 </div>
             </div>
