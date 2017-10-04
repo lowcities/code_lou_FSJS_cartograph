@@ -90,16 +90,20 @@ button {
     -webkit-transform: translateX(-250%);
     transform: translateX(-250%);
 }
+.nameWelcome {
+    margin: 0 auto;
+    width: 100%;
+}
 .welcome {
     position: relative;
     /* margin: 0 auto; */
     margin-bottom: 100px;
     width: 100%;
     text-align: center;
-    -webkit-transform: translateY(85%);
+    /* -webkit-transform: translateY(85%);
     transform: translateY(85%);
-    transition: all .9s cubic-bezier(0.6, -0.28, 0.735, 0.045);
-    opacity: 0;
+    transition: all .9s cubic-bezier(0.6, -0.28, 0.735, 0.045); */
+    opacity: 1;
 }
 .show-welcome {
     -webkit-transform: translateY(45%);

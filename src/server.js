@@ -41,7 +41,7 @@ app.use('/', router);
 mongoose.connect(`mongodb://${config.db.host}/${config.db.dbName}`, {useMongoClient: true});
 
 //require the List model file
-require('./models/list.model.js');
+require('./models/user.model.js');
 
 
 

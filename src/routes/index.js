@@ -2,7 +2,7 @@
 const app = require('express');
 const router = require('express').Router();
 const mongoose = require('mongoose');
-const List = require('../models/list.model');
+const User = require('../models/user.model');
 
 
 
@@ -39,13 +39,15 @@ router.post('/register', function(req, res, next) {
 			return next(err);
 		}
         //use schema's 'create' method to insert document into Mongo
-		List.create(userData, (error, newUser) => {
+		User.create(userData, (error, user) => {
 			if(error) {
 				return next(error);
 			} else {
                 // req.session.userId = user._id;
-                console.log("test");
-                res.send({redirect: '/list'});            }
+                
+                req.session.userId = user._id;
+                console.log(user._id);
+                res.send({redirect: '/profile'});            }
             // res.json(newUser);
             
 		});
@@ -58,8 +60,17 @@ router.post('/register', function(req, res, next) {
 });
 
 // GET user profile and list
-router.get('/user', function(req, res, next) {
-    return res.render('user');
+router.get('/profile', function(req, res, next) {
+    User.findById(req.session.userId)
+        .exec((error, user) => {
+            if (error) {
+                return next(error);
+            } else {
+                return res.render('profile', {
+                    name: user.name
+                });
+            }
+        });
 });
 
 // GET all lists

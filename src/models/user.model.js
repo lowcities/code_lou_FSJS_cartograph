@@ -2,7 +2,7 @@
 const mongoose = require('mongoose');
 
 // Layout of Grocery list
-const ListSchema = new mongoose.Schema({
+const UserSchema = new mongoose.Schema({
     name: {
         type: String,
         requires: true,
@@ -26,11 +26,11 @@ const ListSchema = new mongoose.Schema({
     
 });
 
-const List = mongoose.model('List', ListSchema);
-module.exports = List;
+const User = mongoose.model('User', UserSchema);
+module.exports = User;
 
 // Count how many lists are in the collection
-List.count({}, function(err, count) {
+User.count({}, function(err, count) {
     if (err) {
       throw err;
     } else if (count > 0) {
@@ -39,7 +39,7 @@ List.count({}, function(err, count) {
     // ...
   });
 
-const lists = require('./list.seed.json');
+const users = require('./list.seed.json');
 // lists.forEach(function(name, index) {
 //     List.find({'name': List.name}, function(err, lists) {
 //         console.log("test");
