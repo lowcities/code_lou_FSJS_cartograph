@@ -1,45 +1,79 @@
 
-const nameInput = document.getElementById('name');
-const button = document.getElementById('nameButton');
+
+const addNameBtn = document.getElementById('nameButton');
 const nameIntro = document.getElementById('nameInput');
 const welcomeMessage = document.getElementById('welcome');
 const listContainer = document.getElementById('list-container');
 const itemList = document.getElementById('item-list');
 
 // Info entered eg. Name, grocery items
-var userInfo = {
-    "name" : nameInput
-}
+// var userInfo = {
+//     "name" : userName
+// }
 
 // Handlebars templates
-const nameTemplate = $('#userName').html();
+
 const listTemplate = $('#groceryList').html();
 
-const nameTemplateScript = Handlebars.compile(nameTemplate);
+
 // const listTemplateScript = Handlebars.compile(listTemplate);
 
 // Adds name from nameInput value
-button.addEventListener('click', () => {
-    let name = nameInput.value;
-    userInfo.name = name;
-    if (!name) {
-        let error = `<h2>Please enter a valid name</h2>`;
-        welcomeMessage.innerHTML = error;
-    } else {
-        let nameHTML = nameTemplateScript(userInfo);
-        nameIntro.classList.add('fade');
-        welcomeMessage.innerHTML = nameHTML;
-    }
-    welcomeMessage.classList.add('show-welcome');
-    itemList.classList.add('item-list-show');
-    refreshListDb();
-});
+// addNameBtn.addEventListener('click', () => {
+//     let userName = nameInput.value;
+//     userInfo.name = userName;
+//     let nameHTML = nameTemplateScript(userInfo);
+//     nameIntro.classList.add('fade');
+//     welcomeMessage.innerHTML = nameHTML;
+//     welcomeMessage.classList.add('show-welcome');
+//     itemList.classList.add('item-list-show');
+//     addList(userName);
+//     refreshListDb();
+// });
 
-
-function addItem() {
-    const item = $('#item-name').val();
+function addUser() {
+    let name = $('#name').val();
+    let email = $('#email').val();
+    let password = $('#password').val();
+    let confirmPassword = $('#confirmPassword').val();
     const itemData = {
-        itemName: item
+        name: name,
+        email: email,
+        password: password,
+        confirmPassword: confirmPassword
+
+    };
+    console.log(itemData);
+    // const nameTemplate = $('#userName').html();
+    // const nameTemplateScript = Handlebars.compile(nameTemplate);
+
+    $.ajax({
+        type: "POST",
+        url: '/register',
+        data: JSON.stringify(itemData),
+        dataType: 'json',
+        contentType: 'application/json',
+        success: function (data, textStatus, jqXHR) {
+            if (typeof data.redirect == 'string') {
+                window.location = data.redirect;
+
+            }  
+        }      
+    })
+        .done(function(response) {
+            console.log("We have posted a new user");
+            // refreshListDb();
+            
+        })
+        .fail(function(error) {
+            console.log("It didnt post.", error);
+        });
+}
+
+// When user inputs their name it creates a new list
+function addList(userName) {
+    const itemData = {
+        name: userName
     };
 console.log(itemData);
 
@@ -52,16 +86,20 @@ console.log(itemData);
     })
         .done(function(response) {
             console.log("We have posted the data");
-            refreshListDb();
+            // refreshListDb();
         })
         .fail(function(error) {
             console.log("It didnt post.", error);
         });
 }
-    
+
+function addItem(id) {
+    $('#item-name').val();
+}
+
 // Retrieve information from the database
 function getLists() {
-    return $.ajax('/api/list')
+    return $.ajax('/list')
       .then(res => {
         console.log("Results from getLists()", res);
         return res;

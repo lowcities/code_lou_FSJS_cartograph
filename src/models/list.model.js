@@ -3,7 +3,21 @@ const mongoose = require('mongoose');
 
 // Layout of Grocery list
 const ListSchema = new mongoose.Schema({
-    name: String,
+    name: {
+        type: String,
+        requires: true,
+        trim: true
+    },
+    email: {
+        type: String,
+        unique: true,
+        required: true,
+        trim: true
+    },
+    password: {
+        type: String,
+        required: true
+    },
     groceryList: [
         {
             itemName: String
@@ -40,10 +54,10 @@ const lists = require('./list.seed.json');
 //         }
 //     });
 // });
-List.create(lists, function(err, newLists) {
-      if (err) {
-          throw err;
-      }
-      console.log("DB seeded");
+// List.create(lists, function(err, newLists) {
+//       if (err) {
+//           throw err;
+//       }
+//       console.log("DB seeded");
       
-  });
+//   });

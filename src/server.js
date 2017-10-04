@@ -1,22 +1,39 @@
 // Imported modules
+const path = require('path');
 const express = require('express');
 const config = require('./config');
-const path = require('path');
 const router = require('./routes');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const handlebars = require('express-handlebars');
+const session = require('express-session');
 
 
 
 // Create the application object
 const app = express();
 
+// use sessions for tracking logins
+app.use(session({
+  secret: 'thanks for using cartograph',
+  resave: true,
+  saveUninitialized: false
+}));
+
 // path to static files
 const publicPath = path.resolve(__dirname, './public');
 app.use(express.static(publicPath));
 app.use(bodyParser.json());
 
-app.use('/api', router);
+app.set('views', path.join( __dirname + '/views')); 
+app.engine('handlebars', handlebars({extname:'handlebars', defaultLayout:'main.handlebars', layoutsDir: __dirname + '/views/layouts'}));
+  
+
+app.set('view engine', 'handlebars');
+
+
+
+app.use('/', router);
 
 
 

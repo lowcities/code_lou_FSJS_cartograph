@@ -1,8 +1,66 @@
 // Create a router object to export to server.js
+const app = require('express');
 const router = require('express').Router();
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
 const List = require('../models/list.model');
+
+
+
+
+// Login page for new users
+router.get('/login', function(req, res, next) {
+    return res.redirect('/register');
+});
+
+router.get('/register', function(req, res, next) {
+    res.render('register');
+
+});
+
+router.post('/register', function(req, res, next) {
+    //create object with form input
+		let userData = {
+			email: req.body.email,
+			name: req.body.name,
+            password: req.body.password,
+            confirmPassword: req.body.confirmPassword
+        };
+
+       console.log(req.body);
+    if (req.body.email &&
+		req.body.name &&
+		req.body.password &&
+		req.body.confirmPassword) {
+
+		//confirm that user typed same password twice
+		if (req.body.password !== req.body.confirmPassword) {
+			let err = new Error('Passwords do not match.');
+			err.status = 400;
+			return next(err);
+		}
+        //use schema's 'create' method to insert document into Mongo
+		List.create(userData, (error, newUser) => {
+			if(error) {
+				return next(error);
+			} else {
+                // req.session.userId = user._id;
+                console.log("test");
+                res.send({redirect: '/list'});            }
+            // res.json(newUser);
+            
+		});
+
+		} else {
+			let err = new Error('All fields required.');
+			err.status = 400;
+			return next(err);
+		}
+});
+
+// GET user profile and list
+router.get('/user', function(req, res, next) {
+    return res.render('user');
+});
 
 // GET all lists
 router.get('/list', function(req, res, next) {
@@ -18,18 +76,27 @@ router.get('/list', function(req, res, next) {
 
 // Create a new list
 router.post('/list', function(req, res, next) {
+    // res.render('/list');
     const listData = {
-        itemName: req.body.itemName
+        name: req.body.name
     };
-    console.log(listData);
+
+    if (req.body.name) {
+        List.create(listData, function(err, newList) {
+            if (err) {
+                console.log(err);
+                return res.status(500).json(err);
+            }
+            res.json(newList);
+        });
+    } else {
+        let err = new Error('Name field required');
+        err.status = 400;
+        return next(err);
+    }
     
-    List.create(listData, function(err, newList) {
-        if (err) {
-            console.log(err);
-            return res.status(500).json(err);
-        }
-        res.json(newList);
-    });
+    
+    
   });
 
 // update an exsisting list

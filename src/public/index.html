@@ -26,7 +26,6 @@
                         <h2>Please enter your name</h2>
                         <input id="name" type="text">
                         <button id="nameButton">GO!</button>
-                    </div>
                 </div>    
                 <div id="welcome" class="welcome">
                     <script id="userName" type="text/x-handlebars-template">
@@ -39,12 +38,12 @@
                         <form class="form-inline">
                             <label for="item-name"></label>
                             <input type="text" id="item-name" placeholder="Item">
-                            <button id="add-item-button" class="add-item-btn" onclick="addItem()">Add Item</button>
+                            <button id="add-item-button" class="add-item-btn" onclick="addItem('{{_id}}')">Add Item</button>
                         </form>
                     </div>
                     <script id="list-template" type="text/x-handlebars-template">
                         {{#each lists}}
-                        <h2>{{name}}</h2>
+                        <h2>{{name}}'s list do far...</h2>
                             <ul class="groceryList">
                                 {{#each groceryList}}
                                 <li class="groceryItem">
