@@ -90,7 +90,8 @@ router.get('/profile', function(req, res, next) {
                 return next(error);
             } else {
                 return res.render('profile', {
-                    name: user.name
+                    name: user.name,
+                    userId: req.session.userId
                 });
             }
         });
@@ -109,23 +110,28 @@ router.get('/list', function(req, res, next) {
 });
 
 // Create a new list
-router.post('/profile', function(req, res, next) {
-    
+router.put('/profile/:userId', function(req, res, next) {
+    let userId = req.session.userId;
+    let item = req.body.itemName;
+
+    User.findById(userId, function(err, user) {
+        if (err) {
+            console.log(err);
+            return res.status(500).json(err);
+        }
+        if (!user) {
+            return res.status(404).json({message: "File not found"})
+        }
+
+        user.groceryList.push({itemName: item});
+        user.save( function(err, savedFile) {
+            console.log("File saved");
+        });
+    });
+  
 });
 
-// update an exsisting list
-router.put('/profile', function(req, res, next) {
-    // const {userId} = req.params;
-    // const list = lists.find(entry => entry.id === listId);
-    let listData = {
-        groceryList: [{
-            itemName: req.body.item
-        }]
-    };
-   console.log(listData);
-    // res.json(list);
-  })
-  
+
 // delete an exsisting list
 router.delete('/list/:listId', function(req, res, next) {
     res.end(`Deleting list '${req.params.listId}'`);

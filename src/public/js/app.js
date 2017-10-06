@@ -53,7 +53,7 @@ function addUser() {
     })
         .done(function(response) {
             console.log("We have posted a new user");
-            // refreshListDb();
+            refreshProfileDb();
             
         })
         .fail(function(error) {
@@ -84,72 +84,55 @@ console.log(itemData);
         });
 }
 
-function addItem(id) {
-    console.log("Edit test", id);
-    // let item = $('#item-name').val();
-    // const itemData = {
-    //     item: item
-    // };
-    // console.log(itemData);
-    // $.ajax({
-    //     type: "POST",
-    //     url: '/profile',
-    //     data: JSON.stringify(itemData),
-    //     dataType: 'json',
-    //     contentType: 'application/json',
-    // })
-    //     .done(function(response) {
-    //         console.log("We have posted a new item");
-    //         // refreshListDb();
-            
-    //     })
-    //     .fail(function(error) {
-    //         console.log("Item didnt post.", error);
-    //     });
-}
-
-// Retrieve information from the database
-function getProfile() {
-    let email = $('#loginEmail').val();
-    let password = $('#loginPassword').val();
-    const userData = {
-        email: email,
-        password: password
+function addItem(userId) {
+    console.log(userId);
+    const user = userId;
+    const item = $('#itemName').val();
+    const fileData = {
+        _id: user,
+        itemName: item
        };
+        let method, url;
+    if (fileData._id) {
+        method =  'PUT';
+        url = '/profile/' + fileData._id;
+    } else {
+        method = 'POST';
+        url = '/profile';
+    }
 
-       console.log(userData);
-
-       $.ajax({
-        type: "POST",
-        url: '/login',
-        data: JSON.stringify(userData),
+    $.ajax({
+        type: method,
+        url: url,
+        data: JSON.stringify(fileData),
         dataType: 'json',
         contentType: 'application/json'
     })
         .done(function(response) {
-            console.log("We have posted the data");
-            // refreshListDb();
+            console.log('We have posted the data');
         })
         .fail(function(error) {
-            console.log("It didnt post.", error);
-        });
-    
-  }
+            console.log('Posint failed', error);
+        })
+        console.log("File Data", fileData);
+   
+}
+
 
 function refreshProfileDb() {
-    const listTemplate = $('#list-template').html();
-    const compiledTemplate = Handlebars.compile(listTemplate);
+    // const listTemplate = $('#list-template').html();
+    // const compiledTemplate = Handlebars.compile(listTemplate);
   
     getProfile()
-      .then(user => {
+      .then(users => {
         
-        window.itemList = user;
+        window.fileList = users;
         
-        const data = {user: user};
+        const data = {users: users};
         const html = compiledTemplate(data);
         $(listContainer).append(html);
         
       });
   }
 
-// window.addEventListener('load', refreshListDb);
+// window.addEventListener('load', refreshProfileDb);
