@@ -6,17 +6,8 @@ const welcomeMessage = document.getElementById('welcome');
 const listContainer = document.getElementById('list-container');
 const itemList = document.getElementById('item-list');
 
-// Info entered eg. Name, grocery items
-// var userInfo = {
-//     "name" : userName
-// }
-
-// Handlebars templates
-
-const listTemplate = $('#groceryList').html();
-
-
 // const listTemplateScript = Handlebars.compile(listTemplate);
+
 
 // Adds name from nameInput value
 // addNameBtn.addEventListener('click', () => {
@@ -94,29 +85,67 @@ console.log(itemData);
 }
 
 function addItem(id) {
-    $('#item-name').val();
+    console.log("Edit test", id);
+    // let item = $('#item-name').val();
+    // const itemData = {
+    //     item: item
+    // };
+    // console.log(itemData);
+    // $.ajax({
+    //     type: "POST",
+    //     url: '/profile',
+    //     data: JSON.stringify(itemData),
+    //     dataType: 'json',
+    //     contentType: 'application/json',
+    // })
+    //     .done(function(response) {
+    //         console.log("We have posted a new item");
+    //         // refreshListDb();
+            
+    //     })
+    //     .fail(function(error) {
+    //         console.log("Item didnt post.", error);
+    //     });
 }
 
 // Retrieve information from the database
-function getLists() {
-    return $.ajax('/list')
-      .then(res => {
-        console.log("Results from getLists()", res);
-        return res;
-      })
-      .fail(err => {
-        console.log("Error in getLists()", err);
-        throw err;
-      });
+function getProfile() {
+    let email = $('#loginEmail').val();
+    let password = $('#loginPassword').val();
+    const userData = {
+        email: email,
+        password: password
+       };
+
+       console.log(userData);
+
+       $.ajax({
+        type: "POST",
+        url: '/login',
+        data: JSON.stringify(userData),
+        dataType: 'json',
+        contentType: 'application/json'
+    })
+        .done(function(response) {
+            console.log("We have posted the data");
+            // refreshListDb();
+        })
+        .fail(function(error) {
+            console.log("It didnt post.", error);
+        });
+    
   }
 
-function refreshListDb() {
+function refreshProfileDb() {
     const listTemplate = $('#list-template').html();
     const compiledTemplate = Handlebars.compile(listTemplate);
   
-    getLists()
-      .then(lists => {
-        const data = {lists: lists};
+    getProfile()
+      .then(user => {
+        
+        window.itemList = user;
+        
+        const data = {user: user};
         const html = compiledTemplate(data);
         $(listContainer).append(html);
         

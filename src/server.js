@@ -19,11 +19,13 @@ app.use(session({
   resave: true,
   saveUninitialized: false
 }));
+app.use(bodyParser.urlencoded());
+app.use(bodyParser.json());
 
 // path to static files
 const publicPath = path.resolve(__dirname, './public');
 app.use(express.static(publicPath));
-app.use(bodyParser.json());
+
 
 app.set('views', path.join( __dirname + '/views')); 
 app.engine('handlebars', handlebars({extname:'handlebars', defaultLayout:'main.handlebars', layoutsDir: __dirname + '/views/layouts'}));

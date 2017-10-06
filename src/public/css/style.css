@@ -90,10 +90,8 @@ button {
     -webkit-transform: translateX(-250%);
     transform: translateX(-250%);
 }
-.nameWelcome {
-    margin: 0 auto;
-    width: 100%;
-}
+
+
 .welcome {
     position: relative;
     /* margin: 0 auto; */
@@ -110,11 +108,23 @@ button {
     transform: translateY(45%);
     opacity: 1;
 }
-/*          List Section
+/*          Profile Section
 ========================================================== */
-#list-container {
+.nameWelcome {
     margin: 0 auto;
     width: 100%;
+    text-align: center;
+}
+#list-container {
+    margin: 10% 10%;
+    
+}
+#add-item-form {
+    
+    width: 80%;
+}
+#item-name {
+    
 }
 .groceryList {
     list-style: none;
@@ -134,8 +144,8 @@ button {
     padding: 2px;
 }
 .item-list {
-    display: none;
-    transition: all 500 ease;
+    /* display: none;
+    transition: all 500 ease; */
     
 }
 .item-list-show {

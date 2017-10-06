@@ -1,12 +1,12 @@
-<div class="intro-container">
-                    <div id="nameInput" class="nameInput">
-                        <h2>Please login</h2>
-                        <form method="POST" action="/login">
-                            <label for="email">Email</label>
-                            <input id="email" type="text" placeholder="email@domain.com" name="email">
-                            <label for="password">Password</label>
-                            <input  type="password" id="password" placeholder="password" name="password">
-                            <button id="nameButton">Log in</button>
-                        </form>
-                    </div>
-                </div>
+    <div class="intro-container">
+        <div id="nameInput" class="nameInput">
+            <h2>Please login</h2>
+            <form>
+                <label for="email">Email</label>
+                <input id="loginEmail" type="text" placeholder="email@domain.com" name="email">
+                <label for="password">Password</label>
+                <input  type="password" id="loginPassword" placeholder="password" name="password">
+                <button type="button" id="nameButton" onclick="getProfile()">Log in</button>
+            </form>
+        </div>
+    </div>

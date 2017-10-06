@@ -5,11 +5,38 @@ const mongoose = require('mongoose');
 const User = require('../models/user.model');
 
 
-
+router.get('/', function(req, res, next) {
+    return res.redirect('/login');
+});
 
 // Login page for new users
 router.get('/login', function(req, res, next) {
-    return res.redirect('/register');
+    return res.render('login');
+});
+
+// POST login info to access user profile
+router.post('/login', (req, res, next) => {
+    let userData = {
+        email: req.body.email,
+        password: req.body.password
+    }
+    console.log(userData);
+	if(req.body.email && req.body.password) {
+		User.authenticate(req.body.email, req.body.password, (error, user) => {
+			if(error || !user) {
+				let err = new Error('Wrong email or password.');
+				err.status =  401;
+				return next(err);
+			} else {
+				req.session.userId = user._id;
+                return res.redirect('/profile');
+            }
+		});
+	} else {
+		let err = new Error('Email and password are required.');
+		err.status = 401;
+		return next(err);
+	}
 });
 
 router.get('/register', function(req, res, next) {
@@ -25,8 +52,6 @@ router.post('/register', function(req, res, next) {
             password: req.body.password,
             confirmPassword: req.body.confirmPassword
         };
-
-       console.log(req.body);
     if (req.body.email &&
 		req.body.name &&
 		req.body.password &&
@@ -43,14 +68,12 @@ router.post('/register', function(req, res, next) {
 			if(error) {
 				return next(error);
 			} else {
-                // req.session.userId = user._id;
-                
                 req.session.userId = user._id;
                 console.log(user._id);
-                res.send({redirect: '/profile'});            }
+                res.send({redirect: '/profile'});            
+            }
             // res.json(newUser);
-            
-		});
+        });
 
 		} else {
 			let err = new Error('All fields required.');
@@ -86,41 +109,21 @@ router.get('/list', function(req, res, next) {
 });
 
 // Create a new list
-router.post('/list', function(req, res, next) {
-    // res.render('/list');
-    const listData = {
-        name: req.body.name
-    };
-
-    if (req.body.name) {
-        List.create(listData, function(err, newList) {
-            if (err) {
-                console.log(err);
-                return res.status(500).json(err);
-            }
-            res.json(newList);
-        });
-    } else {
-        let err = new Error('Name field required');
-        err.status = 400;
-        return next(err);
-    }
+router.post('/profile', function(req, res, next) {
     
-    
-    
-  });
+});
 
 // update an exsisting list
-router.put('/list/:listId', function(req, res, next) {
-    const {listId} = req.params;
-    const list = lists.find(entry => entry.id === listId);
-    if (!list) {
-      return res.status(404).end(`Could not find list '${listId}'`);
-    }
-  
-    list.title = req.body.title;
-    list.description = req.body.description;
-    res.json(list);
+router.put('/profile', function(req, res, next) {
+    // const {userId} = req.params;
+    // const list = lists.find(entry => entry.id === listId);
+    let listData = {
+        groceryList: [{
+            itemName: req.body.item
+        }]
+    };
+   console.log(listData);
+    // res.json(list);
   })
   
 // delete an exsisting list
