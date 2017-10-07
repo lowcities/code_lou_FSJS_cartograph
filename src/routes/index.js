@@ -4,6 +4,8 @@ const router = require('express').Router();
 const mongoose = require('mongoose');
 const User = require('../models/user.model');
 
+mongoose.Promise = global.Promise;
+
 
 router.get('/', function(req, res, next) {
     return res.redirect('/login');
@@ -91,6 +93,7 @@ router.get('/profile', function(req, res, next) {
             } else {
                 return res.render('profile', {
                     name: user.name,
+                    groceryList: user.groceryList,
                     userId: req.session.userId
                 });
             }
@@ -137,18 +140,5 @@ router.delete('/list/:listId', function(req, res, next) {
     res.end(`Deleting list '${req.params.listId}'`);
 });
 
-// GET a specific list
-router.get('/list/:listId', function(req, res, next) {
-    const {listId} = req.params; // same as 'const listId = req.params.listId'
-    
-    // for each entry in lists find the first entry id that matches the value of listID
-    const list = lists.find(entry => entry.id === listId);
-    // if list cannot be found
-    if (!list) {
-      return res.status(404).end(`Could not find list '${listId}'`);
-    }
-  
-    res.json(list);
-});
 
 module.exports = router;

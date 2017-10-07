@@ -8,6 +8,7 @@ const mongoose = require('mongoose');
 const handlebars = require('express-handlebars');
 const session = require('express-session');
 
+mongoose.Promise = global.Promise;
 
 
 // Create the application object

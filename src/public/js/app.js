@@ -112,7 +112,7 @@ function addItem(userId) {
             console.log('We have posted the data');
         })
         .fail(function(error) {
-            console.log('Posint failed', error);
+            console.log('Post failed', error);
         })
         console.log("File Data", fileData);
    
