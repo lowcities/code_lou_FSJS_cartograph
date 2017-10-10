@@ -23,22 +23,23 @@ router.post('/login', (req, res, next) => {
         password: req.body.password
     }
     console.log(userData);
-	if(req.body.email && req.body.password) {
-		User.authenticate(req.body.email, req.body.password, (error, user) => {
-			if(error || !user) {
-				let err = new Error('Wrong email or password.');
-				err.status =  401;
-				return next(err);
-			} else {
-				req.session.userId = user._id;
+    User.findOne({ email: req.body.email })
+        .exec(function(error, user) {
+            if (error) {
+                return next(error);
+            } else if ( !user ) {
+                let err = new Error('User not found');
+                err.status = 401;
+                return next(err);
+            } else if ( user && req.body.password !== user.password) {
+                let err = new Error('Password is incorrect');
+                err.status = 401;
+                return next(err);
+            } else {
+                req.session.userId = user._id;
                 return res.redirect('/profile');
             }
-		});
-	} else {
-		let err = new Error('Email and password are required.');
-		err.status = 401;
-		return next(err);
-	}
+        });
 });
 
 router.get('/register', function(req, res, next) {
