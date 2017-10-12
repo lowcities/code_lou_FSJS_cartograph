@@ -7,6 +7,7 @@ const userContainer = document.getElementById('user-container');
 const itemList = document.getElementById('item-list');
 const editBtn = document.querySelector('.edit-btn');
 const editCol = document.querySelector('.edit-column');
+const profileSection = document.getElementById('profile-section');
 
 
 $(document).ready(function() {
@@ -111,8 +112,8 @@ function addItem(userId) {
         contentType: 'application/json'                 
     })
         .done(function(response) {
-            renderUser();
             console.log('We have posted the data');
+            renderUser();
         })
         .fail(function(error) {
             console.log('Post failed', error);
@@ -134,18 +135,22 @@ function getUser() {
 }
 
 function renderUser() {
-    const source = $('#profile-section').html();
+    const source = $(profileSection).html();
     const template = Handlebars.compile(source);
 
     getUser()
         .then(users => {
+
+            console.log(users);
+            window.fileList = users;
+
             const data = {
                 userId: users._id,
                 name: users.name,
                 groceryList: users.groceryList
             };
             const html = template(data);
-            $(userContainer).append(html);
+            $(userContainer).html(html);
         });
 }
 
