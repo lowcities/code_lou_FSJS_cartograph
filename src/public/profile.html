@@ -1,0 +1,47 @@
+<div id="user-container">
+        <script id="profile-section" type="text/x-handlebars-template">
+            <div class="nameWelcome">
+                <h2>Welcome {{name}}!<br></h2>
+                <h2>Lets make a shopping list.</h2>
+            </div>
+            <div id="list-container">
+                <div id="add-item-form" class="add-item-form">
+                    <form class="form-inline">
+                        <label for="itemName"></label>
+                        <input type="text" id="itemName" placeholder="Item">
+                        <button type="button" id="add-item-button" class="add-item-btn" onclick="addItem('{{userId}}')">Add Item</button>
+                    </form>
+                </div>
+                <div class="item-list">
+                    
+                    <h2>{{name}}'s list so far...</h2>
+                    <div class="master-edit-btn">
+                        <button type="button" class="edit-btn">Edit</button>
+                    </div>
+                        <ul class="groceryList">
+                            {{#each groceryList}}
+                            <div class="container list-group">
+                                <div class="row list-group-item">
+                                    <div class="col-6">
+                                        <li class="groceryItem">
+                                            <strong>{{itemName}}</strong>
+                                    </div>
+                                    <div class="col-6 edit-column">        
+                                        <span>
+                                            <img src="/img/pencil.png" class="pencil">
+                                        </span>
+                                        <span class="delete-btn">
+                                            X
+                                        </span>
+                                        </li>
+                                    </div>
+                                </div>
+                            </div>
+                            {{/each}}
+                        </ul>    
+                    
+                </div>
+                            
+            </div>
+        </script>     
+</div>

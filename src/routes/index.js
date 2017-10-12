@@ -7,8 +7,8 @@ const User = require('../models/user.model');
 mongoose.Promise = global.Promise;
 
 
-router.get('/', function(req, res, next) {
-    return res.redirect('/login');
+router.get('/home', function(req, res, next) {
+    return res.render('home');
 });
 
 // Login page for new users
@@ -36,8 +36,9 @@ router.post('/login', (req, res, next) => {
                 err.status = 401;
                 return next(err);
             } else {
+                console.log("I think this worked");
                 req.session.userId = user._id;
-                return res.redirect('/profile');
+                res.json(user);
             }
         });
 });
@@ -47,13 +48,14 @@ router.get('/register', function(req, res, next) {
 
 });
 
+// Create a new user account
 router.post('/register', function(req, res, next) {
     //create object with form input
-		let userData = {
-			email: req.body.email,
-			name: req.body.name,
-            password: req.body.password,
-            confirmPassword: req.body.confirmPassword
+	let userData = {
+		email: req.body.email,
+		name: req.body.name,
+        password: req.body.password,
+        confirmPassword: req.body.confirmPassword
         };
     if (req.body.email &&
 		req.body.name &&
@@ -92,28 +94,15 @@ router.get('/profile', function(req, res, next) {
             if (error) {
                 return next(error);
             } else {
-                return res.render('profile', {
-                    name: user.name,
-                    groceryList: user.groceryList,
-                    userId: req.session.userId
-                });
+                console.log("I am getting the profile", user);
+                return res.json(user);
             }
         });
 });
 
-// GET all lists
-router.get('/list', function(req, res, next) {
-    List.find({}, function(err, lists) {
-        if (err) {
-          console.log(err);
-          res.status(500).json(err);
-        }
-      
-        res.json(lists);
-      });
-});
 
-// Create a new list
+
+// Add a new grocery list item to user profile
 router.put('/profile/:userId', function(req, res, next) {
     let userId = req.session.userId;
     let item = req.body.itemName;
@@ -130,16 +119,9 @@ router.put('/profile/:userId', function(req, res, next) {
         user.groceryList.push({itemName: item});
         user.save( function(err, savedFile) {
             console.log("File saved");
+            res.json(user);
         });
     });
-  
 });
-
-
-// delete an exsisting list
-router.delete('/list/:listId', function(req, res, next) {
-    res.end(`Deleting list '${req.params.listId}'`);
-});
-
 
 module.exports = router;

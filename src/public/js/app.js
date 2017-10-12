@@ -1,26 +1,59 @@
 
-
+const mainContent = document.getElementById('main-content');
 const addNameBtn = document.getElementById('nameButton');
 const nameIntro = document.getElementById('nameInput');
 const welcomeMessage = document.getElementById('welcome');
-const listContainer = document.getElementById('list-container');
+const userContainer = document.getElementById('user-container');
 const itemList = document.getElementById('item-list');
+const editBtn = document.querySelector('.edit-btn');
+const editCol = document.querySelector('.edit-column');
 
-// const listTemplateScript = Handlebars.compile(listTemplate);
+
+$(document).ready(function() {
+    $('#main-content').load('home.html');
+});
+
+function getRegister() {
+    $('#main-content').load('register.html');
+}
+
+function getLogin() {
+    $('#main-content').load('login.html');
+}
+
+function showEdit() {
+    editCol.forEach(item => {
+        item.classList.add('edit-column-show');
+    
+    
+});
+}
 
 
-// Adds name from nameInput value
-// addNameBtn.addEventListener('click', () => {
-//     let userName = nameInput.value;
-//     userInfo.name = userName;
-//     let nameHTML = nameTemplateScript(userInfo);
-//     nameIntro.classList.add('fade');
-//     welcomeMessage.innerHTML = nameHTML;
-//     welcomeMessage.classList.add('show-welcome');
-//     itemList.classList.add('item-list-show');
-//     addList(userName);
-//     refreshListDb();
-// });
+function getProfile(){
+    let email = $('#loginEmail').val();
+    let password = $('#loginPassword').val();
+    let userData = {
+        email: email,
+        password: password
+    };
+
+    $.ajax({
+        type: "POST",
+        url: '/login',
+        data: JSON.stringify(userData),
+        dataType: 'json',
+        contentType: 'application/json',    
+    })
+        .done(function(response) {
+            console.log("We have verified the user");
+            $('#main-content').addClass('hide-content');
+            renderUser();
+        })
+        .fail(function(error) {
+            console.log("It didnt post.", error);
+        });
+}
 
 function addUser() {
     let name = $('#name').val();
@@ -61,29 +94,6 @@ function addUser() {
         });
 }
 
-// When user inputs their name it creates a new list
-function addList(userName) {
-    const itemData = {
-        name: userName
-    };
-console.log(itemData);
-
-    $.ajax({
-        type: "POST",
-        url: '/api/list',
-        data: JSON.stringify(itemData),
-        dataType: 'json',
-        contentType: 'application/json'
-    })
-        .done(function(response) {
-            console.log("We have posted the data");
-            // refreshListDb();
-        })
-        .fail(function(error) {
-            console.log("It didnt post.", error);
-        });
-}
-
 function addItem(userId) {
     console.log(userId);
     const user = userId;
@@ -92,23 +102,16 @@ function addItem(userId) {
         _id: user,
         itemName: item
        };
-        let method, url;
-    if (fileData._id) {
-        method =  'PUT';
-        url = '/profile/' + fileData._id;
-    } else {
-        method = 'POST';
-        url = '/profile';
-    }
 
     $.ajax({
-        type: method,
-        url: url,
+        type: "PUT",
+        url: `/profile/${userId}`,
         data: JSON.stringify(fileData),
         dataType: 'json',
-        contentType: 'application/json'
+        contentType: 'application/json'                 
     })
         .done(function(response) {
+            renderUser();
             console.log('We have posted the data');
         })
         .fail(function(error) {
@@ -118,21 +121,31 @@ function addItem(userId) {
    
 }
 
+function getUser() {
+    return $.ajax('/profile')
+        .then(res => {
+            console.log("Results from getUser()", res);
+            return res;
+        })
+        .fail(err => {
+            console.log('Error in getUser()', err);
+            throw err;
+        });
+}
 
-function refreshProfileDb() {
-    // const listTemplate = $('#list-template').html();
-    // const compiledTemplate = Handlebars.compile(listTemplate);
-  
-    getProfile()
-      .then(users => {
-        
-        window.fileList = users;
-        
-        const data = {users: users};
-        const html = compiledTemplate(data);
-        $(listContainer).append(html);
-        
-      });
-  }
+function renderUser() {
+    const source = $('#profile-section').html();
+    const template = Handlebars.compile(source);
 
-// window.addEventListener('load', refreshProfileDb);
+    getUser()
+        .then(users => {
+            const data = {
+                userId: users._id,
+                name: users.name,
+                groceryList: users.groceryList
+            };
+            const html = template(data);
+            $(userContainer).append(html);
+        });
+}
+

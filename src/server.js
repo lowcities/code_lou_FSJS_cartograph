@@ -5,7 +5,6 @@ const config = require('./config');
 const router = require('./routes');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const handlebars = require('express-handlebars');
 const session = require('express-session');
 
 mongoose.Promise = global.Promise;
@@ -27,13 +26,6 @@ app.use(bodyParser.json());
 const publicPath = path.resolve(__dirname, './public');
 app.use(express.static(publicPath));
 
-// set up for Handlebars
-app.set('views', path.join( __dirname + '/views')); 
-app.engine('handlebars', handlebars({extname:'handlebars', defaultLayout:'main.handlebars', layoutsDir: __dirname + '/views/layouts'}));
-app.set('view engine', 'handlebars');
-
-
-
 app.use('/', router);
 
 
@@ -41,7 +33,7 @@ app.use('/', router);
 // connect to the database
 mongoose.connect(`mongodb://${config.db.host}/${config.db.dbName}`, {useMongoClient: true});
 
-//require the List model file
+//require the User model file
 require('./models/user.model.js');
 
 
