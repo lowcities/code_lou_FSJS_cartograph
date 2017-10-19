@@ -47,9 +47,9 @@ function editItem (id) {
         // get the index value of item in groceryList array
         let itemIndex = window.fileList.indexOf(item);
         console.log(itemIndex);
-        console.log(editArray[itemIndex]);
+        console.log(editItemForm[itemIndex]);
         // access the appropriate edit form related to list item
-        let currentForm = editArray[itemIndex];
+        let currentForm = editItemForm[itemIndex];
         // get the name of the item to be edited
         let currentItem = groceryItem[itemIndex];
         // loop through all the edit forms
@@ -64,7 +64,7 @@ function editItem (id) {
                 currentItem.style.display = 'none';
             } else {
                 // hide all other edit forms
-                editArray[i].classList.remove('show-edit-form');
+                editItemForm[i].classList.remove('show-edit-form');
                 // show all other list items
                 groceryItem[i].style.display = "inline-block";
             }
@@ -108,6 +108,8 @@ function updateItem(itemId) {
         console.log("File Data", itemData);
 }
 
+
+// Login and get user profile
 function getProfile () {
     let email = $('#loginEmail').val();
     let password = $('#loginPassword').val();
@@ -134,6 +136,7 @@ function getProfile () {
         });
 }
 
+// Create a new user profile
 function addUser() {
     let name = $('#name').val();
     let email = $('#email').val();
@@ -155,17 +158,13 @@ function addUser() {
         url: '/register',
         data: JSON.stringify(itemData),
         dataType: 'json',
-        contentType: 'application/json',
-        success: function (data, textStatus, jqXHR) {
-            if (typeof data.redirect == 'string') {
-                window.location = data.redirect;
-
-            }  
-        }      
+        contentType: 'application/json'      
     })
         .done(function(response) {
-            console.log("We have posted a new user");
-            refreshProfileDb();
+            window.currentUser = response;
+            console.log("We have created a new user");
+            $('#main-content').addClass('hide-content');
+            renderUser();
             
         })
         .fail(function(error) {
@@ -173,6 +172,7 @@ function addUser() {
         });
 }
 
+// add items to user's grocery list
 function addItem(userId) {
     console.log(userId);
     const user = userId;
@@ -200,6 +200,8 @@ function addItem(userId) {
    
 }
 
+// GET and render User info and grocery list.
+
 function getUser() {
     return $.ajax('/profile')
         .then(res => {
@@ -211,6 +213,26 @@ function getUser() {
             throw err;
         });
 }
+
+function deleteItem(itemId) {
+    const userId = window.itemList._id;
+    if (confirm("Are you sure?")) {
+        $.ajax({
+            type: 'DELETE',
+            url: `/profile/${userId}/list/${itemId}`,
+            dataType: 'json',
+            contentType: 'application/json'
+        })
+        .done(function(response) {
+            console.log("Item", itemId, " is deleted!");
+            renderUser();
+        })
+        .fail(function(error) {
+            console.log("Item did not delete");
+        });
+    }
+}
+
 
 function renderUser() {
     const source = $(profileSection).html();

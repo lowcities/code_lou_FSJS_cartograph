@@ -75,9 +75,9 @@ router.post('/register', function(req, res, next) {
 			} else {
                 req.session.userId = user._id;
                 console.log(user._id);
-                res.send({redirect: '/profile'});            
+                res.json(user);            
             }
-            // res.json(newUser);
+            
         });
 
 		} else {
@@ -124,36 +124,32 @@ router.put('/profile/:userId', function(req, res, next) {
     });
 });
 
+// edit an exsisting item in user's grocery list
 router.put('/profile/:userId/list/:itemId', function(req, res, next) {
     let userId = req.params.userId;
     let itemName = req.body.itemName;
     let itemId = req.params.itemId;
     let options = { new: false };
-    
-    console.log('itemName: ', itemName);
-    console.log('itemId: ', itemId);
-    var itemIdObj = new mongoose.Types.ObjectId(itemId);
-    console.log('itemIdObj: ', itemIdObj);
-    console.log('userId: ', userId);
+    let itemIdObj = new mongoose.Types.ObjectId(itemId);
 
-const itemObject = {
-    itemName: itemName,
-    _id: itemIdObj,
-};
+    const itemObject = {
+        itemName: itemName,
+        _id: itemIdObj,
+    };
 
-const conditions = { 
-    _id: userId,
-    'groceryList._id': itemIdObj,
- };
-const update = {
-    $set: { 
-      'groceryList.$.itemName': itemName,
-    }
-  };
+    const conditions = { 
+        _id: userId,
+        'groceryList._id': itemIdObj,
+        };
+    const update = {
+        $set: { 
+            'groceryList.$.itemName': itemName,
+        }
+    };
   
-    //console.log('findOneAndUpdate-->', conditions, update);
+    /* find the document that matches the userId 
+    and has matching itemId and update it with the new itemName */
     User.findOneAndUpdate(conditions, update, options, function(err, user) {
-        //console.log('findOneAndUpdate<--', err, user);
         if (err) {
             console.log(err);
             return res.status(500).json(err);
@@ -162,6 +158,29 @@ const update = {
             return res.status(404).json({message: "File not found"})
         }
         res.json(user);
+    });
+});
+
+router.delete('/profile/:userId/list/:itemId', function(req, res, next) {
+    let userId = req.params.userId;
+    let itemName = req.body.itemName;
+    let itemId = req.params.itemId;
+    let options = { 
+        safe: true,
+        multi: false
+    };
+    let itemIdObj = new mongoose.Types.ObjectId(itemId);
+
+    User.update({_id: userId}, { "$pull": { "groceryList" : { '_id': itemIdObj } }}, options, function(err, item) {
+        if (err) {
+            console.log(err);
+            return res.status(500).json(err);
+        }
+        if (!item) {
+            return res.status(404).json({message: "File not found"})
+        }
+        res.json(item);
+        console.log(item);
     });
 });
 
