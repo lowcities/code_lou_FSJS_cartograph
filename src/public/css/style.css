@@ -86,7 +86,7 @@ button:hover {
     border-color: black;
 }
 .intro {
-    margin: 0 auto;
+    margin: 0 5%;
     text-align: center;
 }
 
@@ -121,22 +121,41 @@ button:hover {
 .add-item-form {
     width: 100%;
 }
+.item-edit-form {
+    display: none;
+}
+.show-edit-form {
+    display: inline-block;
+    width: 300px;
+}
+.item-name-edit {
+    display: inline-block;
+    margin: 0 auto;
+}
 .item-list {
     margin: 10% 5%;
 }
 .groceryList {
-    list-style: square outside none;
+    padding: 0;
+    list-style: none;
     text-align: left;
 }
 .groceryItem {
     background-color: transparent;
     color: black;
+    width: 100%;
+}
+.list-group-item:hover {
+    background-color: rgba(48, 148, 151, 0.4);
 }
 .edit-column {
     display: none;
     text-align: right;
 }
-.edit-column-show {
+.inactive {
+    background-color: blue;
+}
+.active{
     display: inline-block;
 }
 .add-item-btn,

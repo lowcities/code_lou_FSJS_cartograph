@@ -94,7 +94,7 @@ router.get('/profile', function(req, res, next) {
             if (error) {
                 return next(error);
             } else {
-                console.log("I am getting the profile", user);
+                // console.log("I am getting the profile", user);
                 return res.json(user);
             }
         });
@@ -121,6 +121,47 @@ router.put('/profile/:userId', function(req, res, next) {
             console.log("File saved");
             res.json(user);
         });
+    });
+});
+
+router.put('/profile/:userId/list/:itemId', function(req, res, next) {
+    let userId = req.params.userId;
+    let itemName = req.body.itemName;
+    let itemId = req.params.itemId;
+    let options = { new: false };
+    
+    console.log('itemName: ', itemName);
+    console.log('itemId: ', itemId);
+    var itemIdObj = new mongoose.Types.ObjectId(itemId);
+    console.log('itemIdObj: ', itemIdObj);
+    console.log('userId: ', userId);
+
+const itemObject = {
+    itemName: itemName,
+    _id: itemIdObj,
+};
+
+const conditions = { 
+    _id: userId,
+    'groceryList._id': itemIdObj,
+ };
+const update = {
+    $set: { 
+      'groceryList.$.itemName': itemName,
+    }
+  };
+  
+    //console.log('findOneAndUpdate-->', conditions, update);
+    User.findOneAndUpdate(conditions, update, options, function(err, user) {
+        //console.log('findOneAndUpdate<--', err, user);
+        if (err) {
+            console.log(err);
+            return res.status(500).json(err);
+        }
+        if (!user) {
+            return res.status(404).json({message: "File not found"})
+        }
+        res.json(user);
     });
 });
 

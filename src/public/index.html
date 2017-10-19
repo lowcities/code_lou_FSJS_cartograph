@@ -39,18 +39,22 @@
                                 
                                 <h2>{{name}}'s list so far...</h2>
                                 <div class="master-edit-btn">
-                                    <button type="button" class="edit-btn">Edit</button>
+                                    <button type="button" class="edit-btn" onclick="showEdit()">Edit</button>
                                 </div>
                                     <ul class="groceryList">
                                         {{#each groceryList}}
                                         <div class="container list-group">
                                             <div class="row list-group-item">
-                                                <div class="col-6">
+                                                <div class="col-8">
                                                     <li class="groceryItem">
-                                                        <strong>{{itemName}}</strong>
+                                                        <strong class="item-name">{{itemName}}</strong>
+                                                        <form class="item-edit-form">
+                                                            <input id="editItem" class="item-name-edit">
+                                                            <button type="button" class="edit-btn" onclick="updateItem('{{_id}}')">Submit</button>
+                                                        </form>
                                                 </div>
-                                                <div class="col-6 edit-column">        
-                                                    <span>
+                                                <div class="col-4 edit-column">        
+                                                    <span onclick="editItem('{{_id}}')">
                                                         <img src="/img/pencil.png" class="pencil">
                                                     </span>
                                                     <span class="delete-btn">
