@@ -19,6 +19,8 @@ app.use(session({
   resave: true,
   saveUninitialized: false
 }));
+
+// use body parser to parse json info
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 

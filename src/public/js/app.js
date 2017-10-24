@@ -14,9 +14,9 @@ const editItemForm = document.getElementsByClassName('item-edit-form');
 
 
 
-$(document).ready(function() {
-    $('#main-content').load('home.html');
-});
+// $(document).ready(function() {
+//     $('#main-content').load('home.html');
+// });
 
 function getRegister() {
     $('#main-content').load('register.html');

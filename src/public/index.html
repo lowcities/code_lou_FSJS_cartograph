@@ -28,10 +28,10 @@
                             <h2>Lets make a shopping list.</h2>
                         </div>
                         <div id="list-container">
-                            <div id="add-item-form" class="add-item-form">
-                                <form class="form-inline">
+                            <div id="add-item-form">
+                                <form class="add-item-form">
                                     <label for="itemName"></label>
-                                    <input type="text" id="itemName" placeholder="Item">
+                                    <input type="text" id="itemName" class="itemName" placeholder="Item">
                                     <button type="button" id="add-item-button" class="add-item-btn" onclick="addItem('{{userId}}')">Add Item</button>
                                 </form>
                             </div>
@@ -43,8 +43,8 @@
                                 </div>
                                     <ul class="groceryList">
                                         {{#each groceryList}}
-                                        <div class="container list-group">
-                                            <div class="row list-group-item">
+                                        <div class="container">
+                                            <div class="row">
                                                 <div class="col-8">
                                                     <li class="groceryItem">
                                                         <strong class="item-name">{{itemName}}</strong>
@@ -55,7 +55,7 @@
                                                 </div>
                                                 <div class="col-4 edit-column">        
                                                     <span onclick="editItem('{{_id}}')">
-                                                        <img src="/img/pencil.png" class="pencil">
+                                                        <img src="/img/pencil.png" class="pencil-icon">
                                                     </span>
                                                     <span class="delete-btn" onclick="deleteItem('{{_id}}')">
                                                         X
