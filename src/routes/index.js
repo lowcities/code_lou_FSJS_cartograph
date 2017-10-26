@@ -12,8 +12,18 @@ router.get('/home', function(req, res, next) {
 });
 
 // Login page for new users
+router.get('/', function(req, res, next) {
+    return res.send();
+});
+
 router.get('/login', function(req, res, next) {
-    return res.render('login');
+    if (req.session.userId) {
+        console.log("session found", req.session.userId);
+        return res.send({ redirect: '/profile' });
+    } else {
+        return res.send();
+    }
+        
 });
 
 // POST login info to access user profile
@@ -89,6 +99,13 @@ router.post('/register', function(req, res, next) {
 
 // GET user profile and list
 router.get('/profile', function(req, res, next) {
+    // if no session cookie exists throw error
+    if (!req.session.userId ) {
+        let err = new Error("You are not authorized to view this page.");
+        err.status = 403;
+        return next(err);
+    }
+    // find session cookie for user and return database info for said user
     User.findById(req.session.userId)
         .exec((error, user) => {
             if (error) {
@@ -99,7 +116,6 @@ router.get('/profile', function(req, res, next) {
             }
         });
 });
-
 
 
 // Add a new grocery list item to user profile

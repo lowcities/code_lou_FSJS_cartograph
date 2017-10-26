@@ -17,8 +17,18 @@ const app = express();
 app.use(session({
   secret: 'thanks for using cartograph',
   resave: true,
-  saveUninitialized: false
+  saveUninitialized: false,
+  cookie: {
+    httpOnly: false,
+    secure: false
+  }
 }));
+
+// make user ID available for all views
+app.use(function (req, res, next) {
+  res.locals.currentUser = req.session.userId;
+  next();
+});
 
 // use body parser to parse json info
 app.use(bodyParser.urlencoded({ extended: true }));
