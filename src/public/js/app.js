@@ -290,12 +290,13 @@ function renderUser() {
             window.itemList = users;
             window.fileList = users.groceryList;
             console.log(users.groceryList);
-
+            let userName = users.name[0].toUpperCase() + users.name.slice(1);
             const data = {
                 userId: users._id,
-                name: users.name,
+                name: userName,
                 groceryList: users.groceryList
             };
+            
             const html = template(data);
             $(userContainer).html(html);
             

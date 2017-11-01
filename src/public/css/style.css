@@ -1,6 +1,8 @@
 /*          Main Styles
 ========================================================== */
-
+a:hover {
+    text-decoration: none;
+}
 body {
     background-color: whitesmoke;
     min-height: 100vh;
@@ -13,14 +15,23 @@ header {
 
 h1, h2, h3, h5, p {
     font-family: 'Righteous', cursive;
-    color: #181616;
+    color: white;
     margin: 0;
+}
+p {
+    font-size: 1.3rem;
 }
 footer {
     background-color: rgba(11, 128, 2, 0.5);
     height: 50px;
     padding-top: 15px;
     text-align: center;
+}
+footer p {
+    color: white;
+}
+.text-shadow {
+    text-shadow: 2px 1px 1px #000;
 }
 /*          Header section
 ========================================================== */
@@ -30,7 +41,11 @@ footer {
     width: 100%;
     text-align: center;
 }
+.title h1 {
+    color: white;
+}
 .title h2 {
+    color: white;
     font-size: 50%;
 }
 .hide-content {
@@ -39,7 +54,19 @@ footer {
 
 /*          Body section
 ========================================================== */
-
+.body-backdrop {
+    background: url('../img/cart.jpg') no-repeat center center fixed;
+    min-height: 100vh;
+    position: relative;
+    z-index: 1;
+}
+#overlay {
+    background-color: rgba(0, 0, 0, 0.4);
+    position: absolute;
+    top: 0; left: 0; 
+    width: 100%;
+    z-index: 2;
+}
 .footer-lock {
     min-height: calc( 100vh - 50px );
 }
@@ -61,11 +88,18 @@ input {
     transition: all 0.3s;
     width: 200px;
 }
+input::placeholder {
+    color: white;
+    opacity: 0.7;
+}
+input:focus {
+    border-bottom: 3px solid rgb(8, 255, 8);
+}
 button {
     background-color: transparent;
-    border: 2px solid black;
+    border: 2px solid white;
     border-radius: 27px;
-    color: black;
+    color: white;
     cursor: pointer;
     font-size: 1rem;
     margin: 10px auto;
@@ -82,9 +116,11 @@ button:hover {
 ========================================================== */
 .blue-txt {
     color: blue;
-    font-size: 1.7rem;
+    font-size: 2rem;
 }
 .login-Btn {
+    border-color: white;
+    color: white;
     font-size: .6rem;
     padding: 2%;
     position: absolute;
@@ -96,10 +132,18 @@ button:hover {
 }
 .register-route-btn {
     margin-top: 20px;
+    animation: pulse 1s infinite alternate-reverse;
+    
 }
-.btn-style {
-    color: black;
-    border-color: black;
+@keyframes pulse {
+    0% {
+        box-shadow: none;
+        
+    }
+    100% {
+        box-shadow: 0 0 5px 1px #fff, 0 0 10px 10px rgb(2, 167, 43);
+        
+    }
 }
 
 /*          Register view
@@ -227,34 +271,31 @@ button:hover {
         padding: 5% 0;
         margin-bottom: 5%;
     }
-    
-    h1, h2, h5, p {
-        color: white;
+    .title h1 {
+        font-size: 4rem;
     }
-    .body-backdrop {
-        background: url('../img/cart.jpg') no-repeat center center fixed;
-        min-height: 100vh;
-        position: relative;
-        z-index: 1;
+    .title h2 {
+        font-size: 1.2rem;
+    }
+    .intro {
+        line-height: 3;
+    }
+    .intro p {
+        font-size: 1.5rem;
+    }
+    .blue-txt {
+        font-size: 3.8rem;
     }
     #overlay {
         background-color: rgba(0, 0, 0, 0.4);
         position: absolute;
-        top: 0; left: 0; bottom: 0;
+        top: 0; left: 0; 
         width: 100%;
         z-index: 2;
     }
-
-    .intro {
-        background-color: rgba(155, 149, 149, 0.5);
-    }
-    .btn-style {
-        color: white;
-        border-color: white;
-    }
-    button {
-        color: white;
-        border-color: white;
+    button:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+        color: black;
     }
     input {
         border-color: white;
