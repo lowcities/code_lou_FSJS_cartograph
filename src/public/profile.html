@@ -10,7 +10,7 @@
         <meta charset="utf-8">
      </head>
     <body>
-        <div id="body-backdrop">
+        <div class="body-backdrop">
             <div id="overlay">
                 <header>
                     <div class="header-backdrop">
@@ -19,13 +19,14 @@
                             <h2>We'll find what you need</h2>
                         </div>
                     </div>
-                    <div>        
-                        <button type="button" class="login-Btn" onclick="getLogin()">Log out</button>      
-                    </div>
+                    
                 </header>
 
                 <div id="user-container">
                     <script id="profile-section" type="text/x-handlebars-template">
+                        <div>        
+                            <button type="button" class="login-Btn" onclick="getLogout('{{userId}}')">Log out</button>      
+                        </div>
                         <div class="nameWelcome">
                             <h2>Welcome {{name}}!<br></h2>
                             <h2>Lets make a shopping list.</h2>
@@ -45,9 +46,9 @@
                                 </div>
                                 <ul class="groceryList">
                                     {{#each groceryList}}
-                                     <div class="container">
+                                     <div class="container item-container">
                                          <div class="row">
-                                            <div class="col-8">
+                                            <div class="col-8 item-column">
                                                 <li class="groceryItem">
                                                     <strong class="item-name">{{itemName}}</strong>
                                                     <form class="item-edit-form">
@@ -72,6 +73,11 @@
                         </div>
                     </script>     
                 </div>
+            </div>
+        </div>        
+        <footer>
+            <p>David Low 2017</p>
+        </footer>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>

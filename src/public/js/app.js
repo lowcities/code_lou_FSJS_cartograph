@@ -11,7 +11,8 @@ const groceryList = document.querySelectorAll('.list-group');
 const editItemValue = document.getElementsByClassName('item-name-edit');
 const editItemForm = document.getElementsByClassName('item-edit-form');
 const introContainer = document.getElementById('intro-container');
-
+const groceryItem = document.getElementsByClassName('item-name');
+var isActive = false;
 function getRegister() {
     introContainer.style.display = 'none';
     $('#main-content').load('register.html');
@@ -21,10 +22,17 @@ function getRegister() {
 // toggle edit tools for each list item when edit button is clicked
 function showEdit() {
     let groupLi = document.getElementsByClassName('edit-column');
-    let itemArray = Array.prototype.slice.call(groupLi);
-    for (let i = 0; i < itemArray.length; i ++) {
-        $(itemArray[i]).toggleClass('active');
-        
+    for (let i = 0; i < groupLi.length; i ++) {
+        // show edit tools for each list item
+        $(groupLi[i]).toggleClass('active');
+        // if the edit tools are not showing
+        if (!$(groupLi[i]).hasClass('active')) {
+            // hide any current showing edit form
+            editItemForm[i].classList.remove('show-edit-form');
+          // show all the list items
+          groceryItem[i].style.display = "inline-block";
+            
+        } 
     }
 }
 
@@ -57,8 +65,9 @@ function addUser() {
         .done(function(response) {
             window.currentUser = response;
             console.log("We have created a new user");
-            $('#main-content').addClass('hide-content');
-            renderUser();
+            // $('#main-content').addClass('hide-content');
+            // navigate to profile page
+            document.location.href = '/profile.html';
             
         })
         .fail(function(error) {
@@ -161,7 +170,7 @@ function editItem (id) {
     // find the item being clicked on grocery list
     const item = window.fileList.find(users => users._id === id);
     // collect all item names
-    const groceryItem = document.getElementsByClassName('item-name');
+    
     // if we find an item that matches the given id
     if (item) {
         // get the index value of item in groceryList array
@@ -175,7 +184,7 @@ function editItem (id) {
         // loop through all the edit forms
         for (let i = 0; i < editItemForm.length; i++) {
             // when we land on the item to be edited
-            if( i === itemIndex) {
+            if( i === itemIndex && !$(currentForm).hasClass('show-edit-form')) {
                 // give the empty input field of the edit form the value of item before it's edited
                 $('.item-name-edit').val(item.itemName);
                 // show the edit form
@@ -251,6 +260,20 @@ function deleteItem(itemId) {
             console.log("Item did not delete");
         });
     }
+}
+
+// Function will logout of users account
+function getLogout(userId) {
+    userId = userId;
+    return $.ajax('/logout')
+    .then(res => {
+        console.log("User has loggd out", res);
+        document.location.href = '/index.html';
+    })
+    .fail(err => {
+        console.log('User did not logout', err);
+        throw err;
+    });
 }
 
 

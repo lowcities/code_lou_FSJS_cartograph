@@ -33,24 +33,40 @@ router.post('/login', (req, res, next) => {
         password: req.body.password
     }
     console.log(userData);
-    User.findOne({ email: req.body.email })
-        .exec(function(error, user) {
-            if (error) {
-                return next(error);
-            } else if ( !user ) {
-                let err = new Error('User not found');
-                err.status = 401;
-                return next(err);
-            } else if ( user && req.body.password !== user.password) {
-                let err = new Error('Password is incorrect');
+    if (req.body.email && req.body.password) {
+        User.authenticate(req.body.email, req.body.password, function(error, user) {
+            if (error || !user) {
+                let err = new Error('Wrong email or password.');
                 err.status = 401;
                 return next(err);
             } else {
-                console.log("I think this worked");
                 req.session.userId = user._id;
-                res.json(user);
+                return res.json(user);
             }
         });
+    } else {
+        let err = new Error('Email and password are required');
+        err.status = 401;
+        return next(err);
+    }
+    // User.findOne({ email: req.body.email })
+    //     .exec(function(error, user) {
+    //         if (error) {
+    //             return next(error);
+    //         } else if ( !user ) {
+    //             let err = new Error('User not found');
+    //             err.status = 401;
+    //             return next(err);
+    //         } else if ( user && req.body.password !== user.password) {
+    //             let err = new Error('Password is incorrect');
+    //             err.status = 401;
+    //             return next(err);
+    //         } else {
+    //             console.log("I think this worked");
+    //             req.session.userId = user._id;
+    //             res.json(user);
+    //         }
+    //     });
 });
 
 router.get('/register', function(req, res, next) {
@@ -198,6 +214,20 @@ router.delete('/profile/:userId/list/:itemId', function(req, res, next) {
         res.json(item);
         console.log(item);
     });
+});
+
+// GET /logout
+router.get('/logout', function(req, res, next) {
+    if (req.session) {
+        req.session.destroy(function(err) {
+            if (err) {
+                return next(err);
+            } else {
+                console.log('User has logged out.')
+                return res.send();
+            }
+        });
+    }
 });
 
 module.exports = router;

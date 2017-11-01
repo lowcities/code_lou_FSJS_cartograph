@@ -1,38 +1,48 @@
+/*          Main Styles
+========================================================== */
+
 body {
     background-color: whitesmoke;
     min-height: 100vh;
 }
 header {
+    background-color: rgba(11, 128, 2, 0.5);
     margin: 0 0 20% 0;
-    padding-top: 20%;
+    padding: 35px 0;
 }
 
-h1, h2, h5, p {
+h1, h2, h3, h5, p {
     font-family: 'Righteous', cursive;
     color: #181616;
+    margin: 0;
 }
-
+footer {
+    background-color: rgba(11, 128, 2, 0.5);
+    height: 50px;
+    padding-top: 15px;
+    text-align: center;
+}
+/*          Header section
+========================================================== */
 .title {
     font-size: 2rem;
     margin: 0 auto;
     width: 100%;
     text-align: center;
 }
-#body-backdrop {
-    
-}
-
-/*          Header section
-========================================================== */
-
 .title h2 {
     font-size: 50%;
 }
-
 .hide-content {
     display: none;
 }
 
+/*          Body section
+========================================================== */
+
+.body-backdrop {
+    min-height: calc( 100vh - 50px );
+}
 
 /*          Form Elements
 ========================================================== */
@@ -73,24 +83,25 @@ button:hover {
 ========================================================== */
 .blue-txt {
     color: blue;
+    font-size: 1.7rem;
 }
 .login-Btn {
-    color: black;
-    border-color: black;
     font-size: .6rem;
     padding: 2%;
     position: absolute;
     top: 0; left: 80%;
 }
-.register-route-btn {
-    color: black;
-    border-color: black;
-}
 .intro {
     margin: 0 5%;
     text-align: center;
 }
-
+.register-route-btn {
+    margin-top: 20px;
+}
+.btn-style {
+    color: black;
+    border-color: black;
+}
 
 /*          Register view
 ========================================================== */
@@ -100,9 +111,7 @@ button:hover {
 }
 
 .nameInput {
-    position: absolute;
     margin: 0 auto;
-    /* left: 30%; */
     width: 100%;
     text-align: center;
         
@@ -127,24 +136,30 @@ button:hover {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: rgba(48, 51, 51, 0.4);
+    background-color: rgba(11, 128, 2, 0.5);
     margin: 0 auto;
     width: 100%;
 }
 .add-item-btn {
     width: 40%;
     margin-bottom: 30px;
+    padding: 10px 0;
 }
 .item-edit-form {
     display: none;
 }
 .show-edit-form {
-    display: inline-block;
-    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: hidden;
+    width: 100%;
 }
 .item-name-edit {
     display: inline-block;
     margin: 0 auto;
+    text-align: left;
+    width: 100%;
 }
 .item-list {
     margin: 10% 5%;
@@ -152,7 +167,12 @@ button:hover {
 .groceryList {
     padding: 0;
     list-style: none;
+    overflow-x: hidden;
     text-align: left;
+}
+.item-container {
+    border-bottom: 1px solid black;
+    line-height: 2;
 }
 .groceryItem {
     background-color: transparent;
@@ -163,20 +183,21 @@ button:hover {
     background-color: rgba(48, 148, 151, 0.4);
 }
 .edit-column {
-    display: none;
     text-align: right;
+    transform: translateX(200px);
+    transition: all .5s ease-in-out;
 }
 .inactive {
     background-color: blue;
 }
 .active{
     display: inline-block;
+    transform: translateX(0);
 }
 .add-item-btn,
 .edit-btn {
     font-size: .6rem;
-    
-    padding: 2px;
+    padding: 5px;
 }
 .master-edit-btn {
     text-align: right;
@@ -202,19 +223,45 @@ button:hover {
 ========================================================== */
 
 @media screen and ( min-width: 768px ) {
+
+    header {
+        padding: 5% 0;
+        margin-bottom: 5%;
+    }
     
-    #body-backdrop {
-        background: url('../img/cart.jpg')center no-repeat;
-        background-size: cover;
+    h1, h2, h5, p {
+        color: white;
+    }
+    .body-backdrop {
+        background: url('../img/cart.jpg') no-repeat center center fixed;
+        min-height: 100vh;
         position: relative;
-        padding-bottom: 100%;
         z-index: 1;
     }
     #overlay {
-        background-color: rgba(0,0,0, 0.4);
+        background-color: rgba(0, 0, 0, 0.4);
         position: absolute;
         top: 0; left: 0; bottom: 0;
         width: 100%;
         z-index: 2;
+    }
+
+    .intro {
+        background-color: rgba(155, 149, 149, 0.5);
+    }
+    .btn-style {
+        color: white;
+        border-color: white;
+    }
+    button {
+        color: white;
+        border-color: white;
+    }
+    input {
+        border-color: white;
+        color: white;
+    }
+    .add-item-form {
+        background-color: rgba(11, 128, 2, 0.8);
     }
 }
