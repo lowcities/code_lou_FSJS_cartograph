@@ -10,74 +10,77 @@
         <meta charset="utf-8">
      </head>
     <body>
-        <div class="body-backdrop">
+        <div>
             <div id="overlay">
-                <header>
-                    <div class="header-backdrop">
-                        <div class="title">
-                            <h1>Cartograph</h1>
-                            <h2>We'll find what you need</h2>
-                        </div>
-                    </div>
-                    
-                </header>
-
-                <div id="user-container">
-                    <script id="profile-section" type="text/x-handlebars-template">
-                        <div>        
-                            <button type="button" class="login-Btn" onclick="getLogout('{{userId}}')">Log out</button>      
-                        </div>
-                        <div class="nameWelcome">
-                            <h2>Welcome {{name}}!<br></h2>
-                            <h2>Lets make a shopping list.</h2>
-                        </div>
-                        <div id="list-container">
-                            <div id="add-item-form">
-                                <form class="add-item-form">
-                                    <label for="itemName"></label>
-                                    <input type="text" id="itemName" class="itemName" placeholder="Item">
-                                    <button type="button" id="add-item-button" class="add-item-btn" onclick="addItem('{{userId}}')">Add Item</button>
-                                </form>
+                <div class="footer-lock">
+                    <header>
+                        <div class="header-backdrop">
+                            <div class="title">
+                                <h1>Cartograph</h1>
+                                <h2>We'll find what you need</h2>
                             </div>
-                            <div class="item-list">                           
-                                <h2>{{name}}'s list so far...</h2>
-                                <div class="master-edit-btn">
-                                    <button type="button" class="edit-btn" onclick="showEdit()">Edit</button>
+                        </div>
+                        
+                    </header>
+                    
+                    <div id="user-container">
+                        <script id="profile-section" type="text/x-handlebars-template">
+                            <div>        
+                                <button type="button" class="login-Btn" onclick="getLogout('{{userId}}')">Log out</button>      
+                            </div>
+                            <div class="nameWelcome">
+                                <h2>Welcome {{name}}!<br></h2>
+                                <h2>Lets make a shopping list.</h2>
+                            </div>
+                            <div id="list-container">
+                                <div id="add-item-form">
+                                    <form class="add-item-form">
+                                        <label for="itemName"></label>
+                                        <input type="text" id="itemName" class="itemName" placeholder="Item">
+                                        <button type="button" id="add-item-button" class="add-item-btn" onclick="addItem('{{userId}}')">Add Item</button>
+                                    </form>
                                 </div>
-                                <ul class="groceryList">
-                                    {{#each groceryList}}
-                                     <div class="container item-container">
-                                         <div class="row">
-                                            <div class="col-8 item-column">
-                                                <li class="groceryItem">
-                                                    <strong class="item-name">{{itemName}}</strong>
-                                                    <form class="item-edit-form">
-                                                        <input id="editItem" class="item-name-edit">
-                                                        <button type="button" class="edit-btn" onclick="updateItem('{{_id}}')">Submit</button>
-                                                    </form>
-                                            </div>
-                                            <div class="col-4 edit-column">        
-                                                <span onclick="editItem('{{_id}}')">
-                                                     <img src="/img/pencil.png" class="pencil-icon">
-                                                </span>
-                                                <span class="delete-btn" onclick="deleteItem('{{_id}}')">
-                                                    X
-                                                </span>
-                                                </li>
+                                <div class="item-list">                           
+                                    <h2>{{name}}'s list so far...</h2>
+                                    <div class="master-edit-btn">
+                                        <button type="button" class="edit-btn" onclick="showEdit()">Edit</button>
+                                    </div>
+                                    <ul class="groceryList">
+                                        {{#each groceryList}}
+                                         <div class="container item-container">
+                                             <div class="row">
+                                                <div class="col-8 item-column">
+                                                    <li class="groceryItem">
+                                                        <strong class="item-name">{{itemName}}</strong>
+                                                        <form class="item-edit-form">
+                                                            <input id="editItem" class="item-name-edit">
+                                                            <button type="button" class="edit-btn" onclick="updateItem('{{_id}}')">Submit</button>
+                                                        </form>
+                                                </div>
+                                                <div class="col-4 edit-column">        
+                                                    <span onclick="editItem('{{_id}}')">
+                                                         <img src="/img/pencil.png" class="pencil-icon">
+                                                    </span>
+                                                    <span class="delete-btn" onclick="deleteItem('{{_id}}')">
+                                                        X
+                                                    </span>
+                                                    </li>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    {{/each}}
-                                </ul>                         
-                            </div>                                   
-                        </div>
-                    </script>     
+                                        {{/each}}
+                                    </ul>                         
+                                </div>                                   
+                            </div>
+                        </script>     
+                    </div>
                 </div>
+                <footer>
+                    <p>David Low 2017</p>
+                </footer>
             </div>
         </div>        
-        <footer>
-            <p>David Low 2017</p>
-        </footer>
+        
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>

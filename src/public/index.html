@@ -12,32 +12,36 @@
     <body>
         <div class="body-backdrop">
             <div id="overlay">
-                <header>
-                    <div class="header-backdrop">
-                        <div class="title">
-                            <a href="/index.html">
-                                <h1>Cartograph</h1>
-                                <h2>We'll find what you need</h2>
-                            </a>
+                <div class="footer-lock">
+                    <header>
+                        <div class="header-backdrop">
+                            <div class="title">
+                                <a href="/index.html">
+                                    <h1>Cartograph</h1>
+                                    <h2>We'll find what you need</h2>
+                                </a>
+                            </div>
                         </div>
+                    </header>
+                    <div id="main-content"></div>
+                    <div id="intro-container">
+                        <div>        
+                            <button type="button" class="login-Btn btn-style" onclick="getLogin()">Log in</button>      
+                        </div>
+                        <div class="intro">
+                            <p>An app that will save you time by finding everything on your grocery list.</p>
+                            <h5><span class="blue-txt">New to Cartograph?</span><br>Register now and make your first list!</h5>
+                            <button type="button" class="register-route-btn btn-style" onclick="getRegister()">Register</button>
+                        </div> 
                     </div>
-                </header>
-                <div id="main-content"></div>
-                <div id="intro-container">
-                    <div>        
-                        <button type="button" class="login-Btn btn-style" onclick="getLogin()">Log in</button>      
-                    </div>
-                    <div class="intro">
-                        <p>An app that will save you time by finding everything on your grocery list.</p>
-                        <h5><span class="blue-txt">New to Cartograph?</span><br>Register now and make your first list!</h5>
-                        <button type="button" class="register-route-btn btn-style" onclick="getRegister()">Register</button>
-                    </div>   
-                </div>
+                </div>      
+                <footer>
+                    <p>David Low 2017</p>
+                </footer>
             </div>
+            
         </div>
-        <footer>
-            <p>David Low 2017</p>
-        </footer>
+        
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
