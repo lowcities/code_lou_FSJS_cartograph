@@ -11,28 +11,54 @@ const groceryList = document.querySelectorAll('.list-group');
 const editItemValue = document.getElementsByClassName('item-name-edit');
 const editItemForm = document.getElementsByClassName('item-edit-form');
 const introContainer = document.getElementById('intro-container');
+const groceryListItem = document.getElementsByClassName('show-edit');
 const groceryItem = document.getElementsByClassName('item-name');
-var isActive = false;
+let isActive = false;
 function getRegister() {
     introContainer.style.display = 'none';
     $('#main-content').load('register.html');
 }
 
+function validInput() {
+    let input = document.getElementsByTagName('input');
+    let valid = $('<span></span>').insertAfter(input);
+}
 
 // toggle edit tools for each list item when edit button is clicked
 function showEdit() {
+    // Array of all grocery list items
+    let itemArray = Array.prototype.slice.call(groceryListItem);
+    // the hidden edit tool column
     let groupLi = document.getElementsByClassName('edit-column');
-    for (let i = 0; i < groupLi.length; i ++) {
-        // show edit tools for each list item
-        $(groupLi[i]).toggleClass('active');
-        // if the edit tools are not showing
-        if (!$(groupLi[i]).hasClass('active')) {
-            // hide any current showing edit form
-            editItemForm[i].classList.remove('show-edit-form');
-          // show all the list items
-          groceryItem[i].style.display = "inline-block";
-            
-        } 
+    for (let i = 0; i < itemArray.length; i++) {
+        // add 'click' event listener to each list item
+        itemArray[i].addEventListener('click', function (e) {
+            // get the index value of the currently clicked item
+            let currentItemIndex = itemArray.indexOf(this);
+            // if the edit tools for said item are not showing
+            if ( !$(groupLi[currentItemIndex]).hasClass('active') ) {
+                // show edit tools
+                $(groupLi[currentItemIndex]).addClass('active');
+                // if screen width is less than 767 px
+                if (window.innerWidth < 767) {
+                    // move list item to the left
+                    $(itemArray[currentItemIndex]).addClass('active-edit');
+                }
+                // if the item edit form is showing
+            } else if ( editItemForm[i].classList.contains('show-edit-form') ) {
+                // keep the edit tools showing
+                $(groupLi[currentItemIndex]).addClass('active');
+            } else {
+                // hide edit tools
+                $(groupLi[currentItemIndex]).removeClass('active');
+                // move item back to center
+                $(itemArray[currentItemIndex]).removeClass('active-edit');
+                // hide edit form
+                editItemForm[i].classList.remove('show-edit-form');
+                // display item name
+                groceryItem[i].style.display = "inline-block";
+            }
+        });
     }
 }
 
@@ -46,13 +72,39 @@ function addUser() {
     let email = $('#email').val();
     let password = $('#password').val();
     let confirmPassword = $('#confirmPassword').val();
+    let input = document.getElementsByTagName('input');
+    let valid = document.getElementsByClassName('validText');
     const itemData = {
         name: name,
         email: email,
         password: password,
         confirmPassword: confirmPassword
-
     };
+
+
+    function validField() {
+        for (let i = 0; i < input.length; i++) {
+            if (input[i].value == "" && valid[i].innerHTML === "") {
+                valid[i].innerHTML = `Please enter a valid ${input[i].name}`;
+                valid[i].classList.add('inValid');
+                input[i].classList.add('inValidBorder');
+            } else {
+                input[i].classList.remove('inValidBorder');
+                valid[i].classList.remove('inValid');
+                valid[i].innerHTML = "" ;
+            }
+        }
+    }
+    if (confirmPassword === "" || confirmPassword !== password) {
+        valid[3].innerHTML = "Please confirm password match!"
+        valid[3].classList.add('inValid');
+        input[3].classList.add('inValidBorder');
+    } else {
+        valid[3].innerHTML = "";
+        valid[3].classList.remove('inValid');
+        input[3].classList.add('inValidBorder');
+    }
+
     console.log(itemData);
 
     $.ajax({
@@ -181,25 +233,37 @@ function editItem (id) {
         let currentForm = editItemForm[itemIndex];
         // get the name of the item to be edited
         let currentItem = groceryItem[itemIndex];
-        // loop through all the edit forms
-        for (let i = 0; i < editItemForm.length; i++) {
-            // when we land on the item to be edited
-            if( i === itemIndex && !$(currentForm).hasClass('show-edit-form')) {
-                // give the empty input field of the edit form the value of item before it's edited
-                $('.item-name-edit').val(item.itemName);
-                // show the edit form
-                currentForm.classList.add('show-edit-form');
-                // hide the list item, allowing the edit form to sit in it's place
-                currentItem.style.display = 'none';
-            } else {
-                // hide all other edit forms
-                editItemForm[i].classList.remove('show-edit-form');
-                // show all other list items
-                groceryItem[i].style.display = "inline-block";
-            }
+        
+        if (!currentForm.classList.contains('show-edit-form')) {
+            $('.item-name-edit').val(item.itemName);
+            currentForm.classList.add('show-edit-form');
+            currentItem.style.display = 'none';
+        } else {
+            currentForm.classList.remove('show-edit-form');
+            currentItem.style.display = 'inline-block';
         }
-     }
-}
+    }
+}    
+        // loop through all the edit forms
+    //     for (let i = 0; i < editItemForm.length; i++) {
+    //         // when we land on the item to be edited
+    //         if( i === itemIndex && !$(currentForm).hasClass('show-edit-form')) {
+    //             // give the empty input field of the edit form the value of item before it's edited
+    //             $('.item-name-edit').val(item.itemName);
+    //             // show the edit form
+    //             currentForm.classList.add('show-edit-form');
+    //             // hide the list item, allowing the edit form to sit in it's place
+    //             currentItem.style.display = 'none';
+    //         } else {
+    //             // hide all other edit forms
+    //             editItemForm[i].classList.remove('show-edit-form');
+    //             // show all other list items
+    //             groceryItem[i].style.display = "inline-block";
+                
+    //         }
+    //     }
+    //  }
+
 
 // function allows user to modify(PUT) items in their list
 function updateItem(itemId) {
@@ -299,6 +363,7 @@ function renderUser() {
             
             const html = template(data);
             $(userContainer).html(html);
+            showEdit();
             
             
         });
@@ -307,4 +372,5 @@ function renderUser() {
 // if url is profile.html, render user profile
 if (top.location.pathname === '/profile.html') {
     renderUser();
+    
 }

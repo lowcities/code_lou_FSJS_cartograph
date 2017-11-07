@@ -1,15 +1,24 @@
-<div class="intro-container">
-    <div id="nameInput" class="nameInput">
-        <h2>Please fill out all fields</h2>
-        <form>
-            <input id="name" type="text" placeholder="first name" name="name">
-            <label for="email"></label>
-            <input id="email" type="text" placeholder="email@domain.com" name="email">
-            <label for="password"></label>
-            <input  type="password" id="password" placeholder="password" name="password">
-            <label for="confirmPassword"></label>
-            <input  type="password" id="confirmPassword" placeholder="confirm password" name="confirmPassword">
-            <button type="button" id="nameButton" onclick="addUser()">Register</button>
-        </form>
+<div class="relative-container">
+    <div class="blurred-bg"></div>
+    <div class="overlay">
+        <div class="intro-container">
+            <div id="nameInput" class="nameInput">
+                <h2>Please fill out all fields</h2>
+                <form>
+                    <input id="name" type="text" placeholder="first name" name="name">
+                    <span class="validText"></span>
+                    <label for="email"></label>
+                    <input id="email" type="text" placeholder="email@domain.com" name="email">
+                    <span class="validText"></span>
+                    <label for="password"></label>
+                    <input  type="password" id="password" placeholder="password" name="password">
+                    <span class="validText"></span>
+                    <label for="confirmPassword"></label>
+                    <input  type="password" id="confirmPassword" placeholder="confirm password" name="confirmPassword">
+                    <span class="validText"></span>
+                    <button type="button" id="nameButton" onclick="addUser()">Register</button>
+                </form>
+            </div>
+        </div>
     </div>
 </div>

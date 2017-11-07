@@ -35,6 +35,8 @@ router.post('/login', (req, res, next) => {
     console.log(userData);
     
     User.findOne({ email: req.body.email })
+        //select the userName password and groceryList elements from User
+        .select("userName password groceryList")
         .exec(function(error, user) {
             if (error) {
                 return next(error);
@@ -42,7 +44,8 @@ router.post('/login', (req, res, next) => {
                 let err = new Error('User not found');
                 err.status = 401;
                 return next(err);
-            } else if ( user && req.body.password !== user.password) {
+            } else if (!user.authenticate(req.body.password)) {
+                console.log('Password not correct!');
                 let err = new Error('Password is incorrect');
                 err.status = 401;
                 return next(err);
@@ -68,6 +71,7 @@ router.post('/register', function(req, res, next) {
         password: req.body.password,
         confirmPassword: req.body.confirmPassword
         };
+
     if (req.body.email &&
 		req.body.name &&
 		req.body.password &&
@@ -136,6 +140,7 @@ router.put('/profile/:userId', function(req, res, next) {
         user.groceryList.push({itemName: item});
         user.save( function(err, savedFile) {
             console.log("File saved");
+            console.error(err);
             res.json(user);
         });
     });

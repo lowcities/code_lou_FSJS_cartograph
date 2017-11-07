@@ -10,12 +10,12 @@
         <meta charset="utf-8">
      </head>
     <body>
-        <div>
-            <div id="overlay">
+        <div class="body-backdrop">
+            <div class="overlay">
                 <div class="footer-lock">
                     <header>
                         <div class="header-backdrop">
-                            <div class="title">
+                            <div class="title text-shadow">
                                 <a href="/index.html">
                                     <h1>Cartograph</h1>
                                     <h2>We'll find what you need</h2>
@@ -35,51 +35,64 @@
                                 <h2>Lets make a shopping list.</h2>
                             </div>
                             <div id="list-container">
-                                <div id="add-item-form">
-                                    <form class="add-item-form">
-                                        <label for="itemName"></label>
-                                        <input type="text" id="itemName" class="itemName" placeholder="Item">
-                                        <button type="button" id="add-item-button" class="add-item-btn" onclick="addItem('{{userId}}')">Add Item</button>
-                                    </form>
-                                </div>
+                                <div id="add-item-form" class="relative-container">
+                                        <div class="blurred-bg"></div>
+                                        <div class="overlay">
+                                            <form class="add-item-form">
+                                                <label for="itemName"></label>
+                                                <input type="text" id="itemName" class="itemName" placeholder="Item">
+                                                <button type="button" id="add-item-button" class="add-item-btn" onclick="addItem('{{userId}}')">Add Item</button>
+                                            </form>
+                                        </div>
+                                    </div>
                                 <div class="item-list">                           
                                     <h2>{{name}}'s list so far...</h2>
-                                    <div class="master-edit-btn">
+                                    <!-- <div class="master-edit-btn">
                                         <button type="button" class="edit-btn" onclick="showEdit()">Edit</button>
-                                    </div>
-                                    <ul class="groceryList">
-                                        {{#each groceryList}}
-                                         <div class="container item-container">
-                                             <div class="row">
-                                                <div class="col-8 item-column">
-                                                    <li class="groceryItem">
-                                                        <strong class="item-name">{{itemName}}</strong>
-                                                        <form class="item-edit-form">
-                                                            <input id="editItem" class="item-name-edit">
-                                                            <button type="button" class="edit-btn" onclick="updateItem('{{_id}}')">Submit</button>
-                                                        </form>
+                                    </div> -->
+                                    <div class="relative-container">
+                                        <div class="blurred-bg"></div>
+                                        <div class="overlay">
+                                            <ul class="groceryList">
+                                                {{#each groceryList}}
+                                                 <div class="container item-container">
+                                                     <div class="row">
+                                                        <div class="col-8 item-column show-edit">
+                                                            <li class="groceryItem">
+                                                                <strong class="item-name">{{itemName}}</strong>
+                                                                <form class="item-edit-form">
+                                                                    <input id="editItem" class="item-name-edit">
+                                                                    <button type="button" class="edit-btn" onclick="updateItem('{{_id}}')">Submit</button>
+                                                                </form>
+                                                        </div>
+                                                        <div class="col-4 edit-column">        
+                                                                
+                                                                    <img src="/img/pencil.png" class="pencil-icon" onclick="editItem('{{_id}}')">
+                                                                
+                                                                <span class="delete-btn" onclick="deleteItem('{{_id}}')">
+                                                                    X
+                                                                </span>
+                                                            </li>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div class="col-4 edit-column">        
-                                                    <span onclick="editItem('{{_id}}')">
-                                                         <img src="/img/pencil.png" class="pencil-icon">
-                                                    </span>
-                                                    <span class="delete-btn" onclick="deleteItem('{{_id}}')">
-                                                        X
-                                                    </span>
-                                                    </li>
-                                                </div>
-                                            </div>
+                                                {{/each}}
+                                            </ul>
                                         </div>
-                                        {{/each}}
-                                    </ul>                         
+                                    </div>                         
                                 </div>                                   
                             </div>
                         </script>     
                     </div>
                 </div>
-                <footer>
-                    <p>David Low 2017</p>
-                </footer>
+                <div class="relative-container">
+                    <div class="blurred-bg"></div>
+                    <div class="overlay">
+                        <footer>
+                            <p>David Low 2017</p>
+                        </footer>
+                    </div>
+                </div>
             </div>
         </div>        
         

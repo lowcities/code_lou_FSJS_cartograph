@@ -25,7 +25,9 @@ footer {
     background-color: rgba(11, 128, 2, 0.5);
     height: 50px;
     padding-top: 15px;
+    position: relative;
     text-align: center;
+    z-index: 99;
 }
 footer p {
     color: white;
@@ -57,15 +59,14 @@ footer p {
 .body-backdrop {
     background: url('../img/cart.jpg') no-repeat center center fixed;
     min-height: 100vh;
-    position: relative;
     z-index: 1;
 }
-#overlay {
+.overlay {
     background-color: rgba(0, 0, 0, 0.4);
-    position: absolute;
     top: 0; left: 0; 
+    position: relative;
     width: 100%;
-    z-index: 2;
+    z-index: 98;
 }
 .footer-lock {
     min-height: calc( 100vh - 50px );
@@ -76,7 +77,7 @@ footer p {
 input {
     background-color: transparent;
     border: 0;
-    border-bottom: 2px solid black;
+    border-bottom: 1px solid white;
     color: black;
     display: block;
     font-size: 1.2rem;
@@ -97,8 +98,14 @@ input:focus {
 }
 button {
     background-color: transparent;
-    border: 2px solid white;
+    background-image: radial-gradient(circle at top, transparent 78%, rgba(17, 16, 16, 0.7));
+    border-top: 1px solid transparent;
+    border-bottom: 1px solid rgba(11, 128, 2, 0.1);
+    border-left-color: transparent;
+    border-right-color: transparent;
     border-radius: 27px;
+    box-shadow: 0 5px 1px 0 rgba(0, 0, 0, 0.4),
+                inset 0 2px 0 0 rgba(255, 255, 255, 0.3);
     color: white;
     cursor: pointer;
     font-size: 1rem;
@@ -108,10 +115,21 @@ button {
     transition: all 200ms;
 }
 button:hover {
-    background-color: rgba(0, 0, 0, 0.4);
-    color: white;
+    border-color: rgba(8, 54, 4, 0.3);
+    box-shadow: none;
+    transform: translateY(5px);
+              
 }
-
+.validText{
+    display: block;
+}
+.inValid {
+    font-size: .8rem;
+    color: rgb(250, 159, 159);
+}
+.inValidBorder {
+    border-bottom: 3px solid rgb(250, 4, 4);
+}
 /*          Home view
 ========================================================== */
 .blue-txt {
@@ -119,12 +137,14 @@ button:hover {
     font-size: 2rem;
 }
 .login-Btn {
-    border-color: white;
     color: white;
     font-size: .6rem;
     padding: 2%;
     position: absolute;
     top: 0; left: 80%;
+}
+.main-content {
+    margin: 10% 10%;
 }
 .intro {
     margin: 0 5%;
@@ -141,23 +161,36 @@ button:hover {
         
     }
     100% {
-        box-shadow: 0 0 5px 1px #fff, 0 0 10px 10px rgb(2, 167, 43);
+        box-shadow: inset 0 0 5px 1px #fff, 
+                    inset 0 0 70px 10px rgb(2, 167, 43);
         
     }
 }
 
+/*          Login view
+========================================================== */
+.login-container {
+
+}
 /*          Register view
 ========================================================== */
 
-.intro-container {
+.intro-container h2 {
+    font-size: 1.5rem;
+    text-align: center;
+    margin-bottom: 5px;
     position: relative;
 }
 
 .nameInput {
+    background-color: rgba(11, 128, 2, 0.5);
     margin: 0 auto;
+    padding: 20px;
     width: 100%;
     text-align: center;
-        
+}
+.nameInput button {
+    margin: 20px 0;
 }
 
 /*          Profile view
@@ -174,14 +207,36 @@ button:hover {
 .itemName {
     display: inline-block;
     margin: 30px auto;
+    transition: all 0.5s ease-in-out;
+}
+.item-column {
+    
+    height: 50px;
+    position: relative;
+    transform: translateX(25%);
+    transition: all .5s ease-in-out;
+}
+.relative-container {
+    position: relative;
+    background-color: rgba(11, 128, 2, 0.2);
+}
+.blurred-bg {
+    background: url('../img/cart.jpg') no-repeat center center fixed;
+    position: absolute;
+    filter: blur(13px);
+    margin: 0 auto;
+    width: 100%;
+    top: 0; right: 0; left: 0; bottom: 0;
+    z-index: 97;
 }
 .add-item-form {
     display: flex;
     flex-direction: column;
     align-items: center;
     background-color: rgba(11, 128, 2, 0.5);
-    margin: 0 auto;
-    width: 100%;
+    position: relative;
+    z-index: 99;
+    
 }
 .add-item-btn {
     width: 40%;
@@ -189,14 +244,18 @@ button:hover {
     padding: 10px 0;
 }
 .item-edit-form {
-    display: none;
+    align-items: center;
+    display: inline-flex;
+    flex-direction: row;
+    overflow-x: hidden;
+    margin-bottom: 5px;
+    width: 0;
+    transform: translateX(-2000px);
+    transition: all .5s ease-in-out;
 }
 .show-edit-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    overflow-x: hidden;
     width: 100%;
+    transform: translateX(0);
 }
 .item-name-edit {
     display: inline-block;
@@ -208,26 +267,33 @@ button:hover {
     margin: 10% 5%;
 }
 .groceryList {
-    padding: 0;
+    background-color: rgba(11, 128, 2, 0.5);
+    padding: 1rem;
     list-style: none;
+    margin-top: 20px;
     overflow-x: hidden;
-    text-align: left;
+    position: relative;
+    z-index: 99;
+    
 }
 .item-container {
-    border-bottom: 1px solid black;
     line-height: 2;
 }
 .groceryItem {
     background-color: transparent;
-    color: black;
+    border-bottom: 1px solid black;
+    color: white;
+    font-family: 'Righteous', sans-serif;
+    font-size: 1.4rem;
     width: 100%;
 }
 .list-group-item:hover {
     background-color: rgba(48, 148, 151, 0.4);
 }
 .edit-column {
-    text-align: right;
-    transform: translateX(200px);
+    padding: 15px 0;
+    text-align: center;
+    transform: translateX(1000px);
     transition: all .5s ease-in-out;
 }
 .inactive {
@@ -235,6 +301,9 @@ button:hover {
 }
 .active{
     display: inline-block;
+    transform: translateX(0);
+}
+.active-edit {
     transform: translateX(0);
 }
 .add-item-btn,
@@ -248,13 +317,18 @@ button:hover {
 }
 
 .pencil-icon {
-    margin: 0 10px;
+    margin-right: 10px;
     width: 20px;
     padding: 2px;
+    text-align: left;
+}
+.pencil-icon:hover {
+    
 }
 .delete-btn {
     color: red;
     font-weight: bolder;
+    width: 20px;
     transition: all 100ms ease;
 }
 
@@ -286,22 +360,21 @@ button:hover {
     .blue-txt {
         font-size: 3.8rem;
     }
-    #overlay {
-        background-color: rgba(0, 0, 0, 0.4);
-        position: absolute;
-        top: 0; left: 0; 
-        width: 100%;
-        z-index: 2;
-    }
-    button:hover {
-        background-color: rgba(255, 255, 255, 0.2);
-        color: black;
-    }
+   
     input {
         border-color: white;
         color: white;
     }
+    .groceryItem {
+        
+    }
     .add-item-form {
-        background-color: rgba(11, 128, 2, 0.8);
+        
+    }
+    .edit-column {
+       
+    }
+    .show-edit-form {
+        width: 80%;
     }
 }
