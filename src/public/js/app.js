@@ -19,9 +19,18 @@ function getRegister() {
     $('#main-content').load('register.html');
 }
 
-function validInput() {
-    let input = document.getElementsByTagName('input');
-    let valid = $('<span></span>').insertAfter(input);
+function validField(input, valid) {
+    for (let i = 0; i < input.length; i++) {
+        if (input[i].value == "" && valid[i].innerHTML === "") {
+            valid[i].innerHTML = `Please enter a valid ${input[i].name}`;
+            valid[i].classList.add('inValid');
+            input[i].classList.add('inValidBorder');
+        } else {
+            input[i].classList.remove('inValidBorder');
+            valid[i].classList.remove('inValid');
+            valid[i].innerHTML = "" ;
+        }
+    }
 }
 
 // toggle edit tools for each list item when edit button is clicked
@@ -81,20 +90,8 @@ function addUser() {
         confirmPassword: confirmPassword
     };
 
-
-    function validField() {
-        for (let i = 0; i < input.length; i++) {
-            if (input[i].value == "" && valid[i].innerHTML === "") {
-                valid[i].innerHTML = `Please enter a valid ${input[i].name}`;
-                valid[i].classList.add('inValid');
-                input[i].classList.add('inValidBorder');
-            } else {
-                input[i].classList.remove('inValidBorder');
-                valid[i].classList.remove('inValid');
-                valid[i].innerHTML = "" ;
-            }
-        }
-    }
+    validField(input, valid);
+    
     if (confirmPassword === "" || confirmPassword !== password) {
         valid[3].innerHTML = "Please confirm password match!"
         valid[3].classList.add('inValid');
@@ -131,10 +128,14 @@ function addUser() {
 function getProfile () {
     let email = $('#loginEmail').val();
     let password = $('#loginPassword').val();
+    let input = document.getElementsByTagName('input');
+    let valid = document.getElementsByClassName('validText');
     let userData = {
         email: email,
         password: password
     };
+
+    validField(input, valid);
 
     $.ajax({
         type: "POST",

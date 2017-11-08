@@ -245,10 +245,13 @@ button:hover {
 }
 .item-edit-form {
     align-items: center;
+    background-color: transparent;
     display: inline-flex;
     flex-direction: row;
     overflow-x: hidden;
     margin-bottom: 5px;
+    position: absolute;
+    top: 0; left: 0;
     width: 0;
     transform: translateX(-2000px);
     transition: all .5s ease-in-out;
@@ -311,11 +314,18 @@ button:hover {
     font-size: .6rem;
     padding: 5px;
 }
-.master-edit-btn {
-    text-align: right;
-    margin-bottom: 10px;
+.add-item-btn {
+    width: 20%;
 }
-
+.edit-btn {
+    box-shadow: none;
+    border: 1px solid white;
+}
+.edit-btn:hover {
+    background-color: white;
+    color: black;
+    transform: translate(0);
+}
 .pencil-icon {
     margin-right: 10px;
     width: 20px;
@@ -368,8 +378,15 @@ button:hover {
     .groceryItem {
         
     }
-    .add-item-form {
-        
+    .item-edit-form {
+        align-items: center;
+        display: inline-flex;
+        flex-direction: row;
+        overflow-x: hidden;
+        margin-bottom: 5px;
+        width: 0;
+        transform: translateX(-2000px);
+        transition: all .5s ease-in-out;
     }
     .edit-column {
        
