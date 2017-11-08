@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Store Search</title>
+        <link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">        
+        <link rel="stylesheet" src="//normalize-css.googlecode.com/svn/trunk/normalize.css" />
+        <link rel="stylesheet" href="css/style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8">
+     </head>
+    <body>
+        <div class="body-backdrop">
+            <div class="overlay">
+                <div class="footer-lock">
+                    <header>
+                        <div class="header-backdrop">
+                            <div class="title text-shadow">
+                                <a href="/index.html">
+                                    <h1>Cartograph</h1>
+                                    <h2>We'll find what you need</h2>
+                                </a>
+                            </div>
+                        </div>
+                        
+                    </header>
+                    
+                    <div id="user-container">
+                        <script id="profile-section" type="text/x-handlebars-template">
+                            <div>        
+                                <button type="button" class="login-Btn" onclick="getLogout('{{userId}}')">Log out</button>      
+                            </div>
+                            <div class="nameWelcome">
+                                <h2>Welcome {{name}}!<br></h2>
+                                <h2>Lets make a shopping list.</h2>
+                            </div>
+                            <div id="list-container">
+                                <div id="add-item-form" class="relative-container">
+                                        <div class="blurred-bg"></div>
+                                        <div class="overlay">
+                                            <form class="add-item-form">
+                                                <label for="itemName"></label>
+                                                <input type="text" id="itemName" class="itemName" placeholder="Item">
+                                                <button type="button" id="add-item-button" class="add-item-btn" onclick="addItem('{{userId}}')">Add Item</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                <div class="item-list">                           
+                                    <h2>{{name}}'s list so far...</h2>                            
+                                    <div class="relative-container">
+                                        <div class="blurred-bg"></div>
+                                        <div class="overlay">
+                                            <ul class="groceryList">
+                                                {{#each groceryList}}
+                                                 <div class="container item-container">
+                                                     <div class="row">
+                                                        <div class="col-8 item-column show-edit">
+                                                            <li class="groceryItem">
+                                                                <strong class="item-name">{{itemName}}</strong>
+                                                                <form class="item-edit-form">
+                                                                    <input id="editItem" class="item-name-edit">
+                                                                    <button type="button" class="edit-btn" onclick="updateItem('{{_id}}')">Submit</button>
+                                                                </form>
+                                                        </div>
+                                                        <div class="col-4 edit-column">        
+                                                                
+                                                                    <img src="/img/pencil.png" class="pencil-icon" onclick="editItem('{{_id}}')">
+                                                                
+                                                                <span class="delete-btn" onclick="deleteItem('{{_id}}')">
+                                                                    X
+                                                                </span>
+                                                            </li>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {{/each}}
+                                            </ul>
+                                        </div>
+                                    </div>                         
+                                </div>                                   
+                            </div>
+                        </script>     
+                    </div>
+                </div>
+                <div class="relative-container">
+                    <div class="blurred-bg"></div>
+                    <div class="overlay">
+                        <footer>
+                            <p>David Low 2017</p>
+                        </footer>
+                    </div>
+                </div>
+            </div>
+        </div>        
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.8/handlebars.min.js"></script>
+        <script src="js/app.js" type="text/javascript"></script>    
+    </body>
+</html>            

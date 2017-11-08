@@ -1,48 +1,86 @@
+/*          Main Styles
+========================================================== */
+a:hover {
+    text-decoration: none;
+}
 body {
-    background-color: black;
+    background-color: whitesmoke;
     min-height: 100vh;
 }
 header {
-    margin-bottom: 10%;
+    background-color: rgba(11, 128, 2, 0.5);
+    margin: 0 0 20% 0;
+    padding: 35px 0;
 }
 
-h1, h2 {
+h1, h2, h3, h5, p {
     font-family: 'Righteous', cursive;
     color: white;
+    margin: 0;
 }
-
+p {
+    font-size: 1.3rem;
+}
+footer {
+    background-color: rgba(11, 128, 2, 0.5);
+    height: 50px;
+    padding-top: 15px;
+    position: relative;
+    text-align: center;
+    z-index: 99;
+}
+footer p {
+    color: white;
+}
+.text-shadow {
+    text-shadow: 2px 1px 1px #000;
+}
+/*          Header section
+========================================================== */
 .title {
     font-size: 2rem;
     margin: 0 auto;
     width: 100%;
     text-align: center;
 }
+.title h1 {
+    color: white;
+}
+.title h2 {
+    color: white;
+    font-size: 50%;
+}
+.hide-content {
+    display: none;
+}
 
-#body-backdrop {
-    background: url('../img/cart.jpg')center no-repeat;
-    background-size: cover;
-    position: relative;
-    padding-bottom: 100%;
+/*          Body section
+========================================================== */
+.body-backdrop {
+    background: url('../img/cart.jpg') no-repeat center center fixed;
+    min-height: 100vh;
     z-index: 1;
 }
-#overlay {
-    background-color: rgba(0,0,0, 0.4);
-    position: absolute;
-    top: 0; left: 0; bottom: 0;
+.overlay {
+    background-color: rgba(0, 0, 0, 0.4);
+    top: 0; left: 0; 
+    position: relative;
     width: 100%;
-    z-index: 2;
+    z-index: 98;
 }
-
+.footer-lock {
+    min-height: calc( 100vh - 50px );
+}
 /*          Form Elements
 ========================================================== */
 
 input {
     background-color: transparent;
     border: 0;
-    border-bottom: 2px solid;
-    color: white;
+    border-bottom: 1px solid white;
+    color: black;
     display: block;
-    font-size: 1.8rem;
+    font-size: 1.2rem;
     letter-spacing: -1px;
     margin: 0 auto;
     outline: 0;
@@ -51,64 +89,111 @@ input {
     transition: all 0.3s;
     width: 200px;
 }
+input::placeholder {
+    color: white;
+    opacity: 0.7;
+}
+input:focus {
+    border-bottom: 3px solid rgb(8, 255, 8);
+}
 button {
     background-color: transparent;
-    border: 2px solid white;
+    background-image: radial-gradient(circle at top, transparent 78%, rgba(17, 16, 16, 0.7));
+    border-top: 1px solid transparent;
+    border-bottom: 1px solid rgba(11, 128, 2, 0.1);
+    border-left-color: transparent;
+    border-right-color: transparent;
     border-radius: 27px;
+    box-shadow: 0 5px 1px 0 rgba(0, 0, 0, 0.4),
+                inset 0 2px 0 0 rgba(255, 255, 255, 0.3);
     color: white;
     cursor: pointer;
     font-size: 1rem;
-    margin-top: 20px;
+    margin: 10px auto;
     padding: 15px 20px;
     text-transform: uppercase;
     transition: all 200ms;
 }
+button:hover {
+    border-color: rgba(8, 54, 4, 0.3);
+    box-shadow: none;
+    transform: translateY(5px);
+              
+}
+.validText{
+    display: block;
+}
+.inValid {
+    font-size: .8rem;
+    color: rgb(250, 159, 159);
+}
+.inValidBorder {
+    border-bottom: 3px solid rgb(250, 4, 4);
+}
+/*          Home view
+========================================================== */
+.blue-txt {
+    color: blue;
+    font-size: 2rem;
+}
+.login-Btn {
+    color: white;
+    font-size: .6rem;
+    padding: 2%;
+    position: absolute;
+    top: 0; left: 80%;
+}
+.main-content {
+    margin: 10% 10%;
+}
+.intro {
+    margin: 0 5%;
+    text-align: center;
+}
+.register-route-btn {
+    margin-top: 20px;
+    animation: pulse 1s infinite alternate-reverse;
+    
+}
+@keyframes pulse {
+    0% {
+        box-shadow: none;
+        
+    }
+    100% {
+        box-shadow: inset 0 0 5px 1px #fff, 
+                    inset 0 0 70px 10px rgb(2, 167, 43);
+        
+    }
+}
 
+/*          Login view
+========================================================== */
+.login-container {
 
-
-/*          Intro Section
+}
+/*          Register view
 ========================================================== */
 
-.intro-container {
+.intro-container h2 {
+    font-size: 1.5rem;
+    text-align: center;
+    margin-bottom: 5px;
     position: relative;
 }
 
 .nameInput {
-    position: absolute;
+    background-color: rgba(11, 128, 2, 0.5);
     margin: 0 auto;
-    /* left: 30%; */
+    padding: 20px;
     width: 100%;
     text-align: center;
-        -webkit-transform: translateX(0%);
-        transform: translateX(0%);
-    /* -webkit-transform: translateX(-100%) scale(0.25); */
-        -webkit-transition: all .5s;
-        -webkit-transition: all .9s cubic-bezier(0.6, -0.28, 0.735, 0.045);
-    transition: all .9s cubic-bezier(0.6, -0.28, 0.735, 0.045);
 }
-.fade {
-    -webkit-transform: translateX(-250%);
-    transform: translateX(-250%);
+.nameInput button {
+    margin: 20px 0;
 }
 
-
-.welcome {
-    position: relative;
-    /* margin: 0 auto; */
-    margin-bottom: 100px;
-    width: 100%;
-    text-align: center;
-    /* -webkit-transform: translateY(85%);
-    transform: translateY(85%);
-    transition: all .9s cubic-bezier(0.6, -0.28, 0.735, 0.045); */
-    opacity: 1;
-}
-.show-welcome {
-    -webkit-transform: translateY(45%);
-    transform: translateY(45%);
-    opacity: 1;
-}
-/*          Profile Section
+/*          Profile view
 ========================================================== */
 .nameWelcome {
     margin: 0 auto;
@@ -116,41 +201,197 @@ button {
     text-align: center;
 }
 #list-container {
-    margin: 10% 10%;
+    margin: 10% 5%;
     
 }
-#add-item-form {
-    
-    width: 80%;
+.itemName {
+    display: inline-block;
+    margin: 30px auto;
+    transition: all 0.5s ease-in-out;
 }
-#item-name {
+.item-column {
     
+    height: 50px;
+    position: relative;
+    transform: translateX(25%);
+    transition: all .5s ease-in-out;
+}
+.relative-container {
+    position: relative;
+    background-color: rgba(11, 128, 2, 0.2);
+}
+.blurred-bg {
+    background: url('../img/cart.jpg') no-repeat center center fixed;
+    position: absolute;
+    filter: blur(13px);
+    margin: 0 auto;
+    width: 100%;
+    top: 0; right: 0; left: 0; bottom: 0;
+    z-index: 97;
+}
+.add-item-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgba(11, 128, 2, 0.5);
+    position: relative;
+    z-index: 99;
+    
+}
+.add-item-btn {
+    width: 40%;
+    margin-bottom: 30px;
+    padding: 10px 0;
+}
+.item-edit-form {
+    align-items: center;
+    background-color: transparent;
+    display: inline-flex;
+    flex-direction: row;
+    overflow-x: hidden;
+    margin-bottom: 5px;
+    position: absolute;
+    top: 0; left: 0;
+    width: 0;
+    transform: translateX(-2000px);
+    transition: all .5s ease-in-out;
+}
+.show-edit-form {
+    width: 100%;
+    transform: translateX(0);
+}
+.item-name-edit {
+    display: inline-block;
+    margin: 0 auto;
+    text-align: left;
+    width: 100%;
+}
+.item-list {
+    margin: 10% 5%;
 }
 .groceryList {
+    background-color: rgba(11, 128, 2, 0.5);
+    padding: 1rem;
     list-style: none;
-    text-align: center;
+    margin-top: 20px;
+    overflow-x: hidden;
+    position: relative;
+    z-index: 99;
+    
+}
+.item-container {
+    line-height: 2;
 }
 .groceryItem {
     background-color: transparent;
+    border-bottom: 1px solid black;
     color: white;
+    font-family: 'Righteous', sans-serif;
+    font-size: 1.4rem;
+    width: 100%;
+}
+.list-group-item:hover {
+    background-color: rgba(48, 148, 151, 0.4);
+}
+.edit-column {
+    padding: 15px 0;
+    text-align: center;
+    transform: translateX(1000px);
+    transition: all .5s ease-in-out;
+}
+.inactive {
+    background-color: blue;
+}
+.active{
+    display: inline-block;
+    transform: translateX(0);
+}
+.active-edit {
+    transform: translateX(0);
+}
+.add-item-btn,
+.edit-btn {
+    font-size: .6rem;
+    padding: 5px;
 }
 .add-item-btn {
-    
-    margin-left: 15px;
-    padding: 7px;
+    width: 20%;
 }
 .edit-btn {
-    font-size: .5rem;
+    box-shadow: none;
+    border: 1px solid white;
+}
+.edit-btn:hover {
+    background-color: white;
+    color: black;
+    transform: translate(0);
+}
+.pencil-icon {
+    margin-right: 10px;
+    width: 20px;
     padding: 2px;
+    text-align: left;
 }
-.item-list {
-    /* display: none;
-    transition: all 500 ease; */
+.pencil-icon:hover {
     
 }
-.item-list-show {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    
+.delete-btn {
+    color: red;
+    font-weight: bolder;
+    width: 20px;
+    transition: all 100ms ease;
+}
+
+.item-list h2 {
+    text-align: center;
+}
+
+/*          Media Queries
+========================================================== */
+
+@media screen and ( min-width: 768px ) {
+
+    header {
+        padding: 5% 0;
+        margin-bottom: 5%;
+    }
+    .title h1 {
+        font-size: 4rem;
+    }
+    .title h2 {
+        font-size: 1.2rem;
+    }
+    .intro {
+        line-height: 3;
+    }
+    .intro p {
+        font-size: 1.5rem;
+    }
+    .blue-txt {
+        font-size: 3.8rem;
+    }
+   
+    input {
+        border-color: white;
+        color: white;
+    }
+    .groceryItem {
+        
+    }
+    .item-edit-form {
+        align-items: center;
+        display: inline-flex;
+        flex-direction: row;
+        overflow-x: hidden;
+        margin-bottom: 5px;
+        width: 0;
+        transform: translateX(-2000px);
+        transition: all .5s ease-in-out;
+    }
+    .edit-column {
+       
+    }
+    .show-edit-form {
+        width: 80%;
+    }
 }

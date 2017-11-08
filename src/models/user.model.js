@@ -5,8 +5,6 @@ const bcrypt = require('bcrypt');
 
 mongoose.Promise = global.Promise;
 
-
-
 // Layout of User profile
 const UserSchema = new mongoose.Schema({
     name: {
@@ -22,81 +20,46 @@ const UserSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: true
+        required: true,
+        select: false
     },
     groceryList: [
         {
             itemName: String
         }
-    ]
-    
+    ],
+    created_at: {
+        type: Date, default: Date.now
+    },
+    deleted: {
+        type: Boolean, default: false
+    }
+
 });
 
 // authenticate input against database documents
-// UserSchema.statics.authenticate = function(email, password, callback) {
-//     User.findOne({ email: email })
-//         .exec(function (error, user) {
-//             if (error) {
-//                 return callback(error);
-//             } else if ( !user ) {
-//                 let err = new Error('User not found');
-//                 err.status = 401;
-//                 return callback(err);
-//             }
-//             console.log(user);
-//             bcrypt.compare(password, user.password, function(error, result) {
-//                 if (result === true) {
-//                     return callback(null, user);
-//                 } else {
-//                     return callback();
-//                 }
-//             });
-//         })
-// }
+UserSchema.methods.authenticate = function(password) {
+    let user = this;
+    return bcrypt.compareSync(password, user.password);
+        
+}
 
 // hash password before saving to database
-// UserSchema.pre('save', function(next) {
-//     let user = this;
-//     bcrypt.hash(user.password, 10, function(err, hash) {
-//         if (err) {
-//             return next(err);
-//         }
-//         user.password = hash;
-//         next();
-//     });
-// });
+UserSchema.pre('save', function(next) {
+    let user = this;
+    if (user.password) { 
+        bcrypt.hash(user.password, 10, function(err, hash) {
+        if (err) {
+            return next(err);
+        }
+        user.password = hash;
+        next();
+ 
+        });
+    } else {
+        next();
+    }
+});
+
 const User = mongoose.model('User', UserSchema);
 module.exports = User;
-
-// Count how many lists are in the collection
-User.count({}, function(err, count) {
-    if (err) {
-      throw err;
-    } else if (count > 0) {
-        return;
-    }
-    // ...
-  });
-
-// const users = require('./list.seed.json');
-// lists.forEach(function(name, index) {
-//     List.find({'name': List.name}, function(err, lists) {
-//         console.log("test");
-//         console.log(name);
-//         if(!err && !lists.length) {
-//             List.create(lists, function(err, newList) {
-//                 if (err) {
-//                     throw err;
-//                 }
-//                 console.log("DB seeded");
-//             });
-//         }
-//     });
-// });
-// List.create(lists, function(err, newLists) {
-//       if (err) {
-//           throw err;
-//       }
-//       console.log("DB seeded");
-      
-//   });

@@ -5,7 +5,6 @@ const config = require('./config');
 const router = require('./routes');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const handlebars = require('express-handlebars');
 const session = require('express-session');
 
 mongoose.Promise = global.Promise;
@@ -18,21 +17,26 @@ const app = express();
 app.use(session({
   secret: 'thanks for using cartograph',
   resave: true,
-  saveUninitialized: false
+  saveUninitialized: false,
+  cookie: {
+    httpOnly: false,
+    secure: false
+  }
 }));
+
+// make user ID available for all views
+app.use(function (req, res, next) {
+  res.locals.currentUser = req.session.userId;
+  next();
+});
+
+// use body parser to parse json info
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // path to static files
 const publicPath = path.resolve(__dirname, './public');
 app.use(express.static(publicPath));
-
-// set up for Handlebars
-app.set('views', path.join( __dirname + '/views')); 
-app.engine('handlebars', handlebars({extname:'handlebars', defaultLayout:'main.handlebars', layoutsDir: __dirname + '/views/layouts'}));
-app.set('view engine', 'handlebars');
-
-
 
 app.use('/', router);
 
@@ -41,7 +45,7 @@ app.use('/', router);
 // connect to the database
 mongoose.connect(`mongodb://${config.db.host}/${config.db.dbName}`, {useMongoClient: true});
 
-//require the List model file
+//require the User model file
 require('./models/user.model.js');
 
 
