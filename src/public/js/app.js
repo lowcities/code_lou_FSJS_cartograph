@@ -355,6 +355,7 @@ function renderUser() {
             window.itemList = users;
             window.fileList = users.groceryList;
             console.log(users.groceryList);
+            // Capitalize the user's name
             let userName = users.name[0].toUpperCase() + users.name.slice(1);
             const data = {
                 userId: users._id,
