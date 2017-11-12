@@ -14,11 +14,28 @@ const introContainer = document.getElementById('intro-container');
 const groceryListItem = document.getElementsByClassName('show-edit');
 const groceryItem = document.getElementsByClassName('item-name');
 let isActive = false;
+
+// loads register form to the main window
 function getRegister() {
     introContainer.style.display = 'none';
     $('#main-content').load('register.html');
 }
 
+// valid email tester function
+function isValidEmailAddress(emailAddress) {
+    var pattern = /^([a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+(\.[a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+)*|"((([ \t]*\r\n)?[ \t]+)?([\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*(([ \t]*\r\n)?[ \t]+)?")@(([a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.)+([a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.?$/i;
+    return pattern.test(emailAddress);
+};
+
+/*  tests password strength. password must contain at least
+ 1 uppercase and 1 lowercase alphabetical character. 1 numeric character and must be at least
+ 6 characters long */
+function validPassword(password) {
+    let strength = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{6,})");
+    return strength.test(password);
+}
+
+// function that tests is input fields are incomplete
 function validField(input, valid) {
     for (let i = 0; i < input.length; i++) {
         if (input[i].value == "" && valid[i].innerHTML === "") {
@@ -91,8 +108,16 @@ function addUser() {
     };
 
     validField(input, valid);
-    
-    if (confirmPassword === "" || confirmPassword !== password) {
+
+    if (isValidEmailAddress(email) === false) {
+        valid[1].innerHTML = "Please enter valid email address";
+        valid[1].classList.add('inValid');
+        input[1].classList.add('inValidBorder');
+    } else if (validPassword(password) === false) {
+        valid[2].innerHTML = "Password must contain at least one uppercase, lowercase and numeric character and be at least 6 characters long.";
+        valid[2].classList.add('inValid');
+        input[2].classList.add('inValidBorder');
+    } else if (confirmPassword === "" || confirmPassword !== password) {
         valid[3].innerHTML = "Please confirm password match!"
         valid[3].classList.add('inValid');
         input[3].classList.add('inValidBorder');
@@ -100,28 +125,26 @@ function addUser() {
         valid[3].innerHTML = "";
         valid[3].classList.remove('inValid');
         input[3].classList.add('inValidBorder');
-    }
-
-    console.log(itemData);
-
-    $.ajax({
-        type: "POST",
-        url: '/register',
-        data: JSON.stringify(itemData),
-        dataType: 'json',
-        contentType: 'application/json'      
-    })
-        .done(function(response) {
-            window.currentUser = response;
-            console.log("We have created a new user");
-            // $('#main-content').addClass('hide-content');
-            // navigate to profile page
-            document.location.href = '/profile.html';
-            
+    
+        console.log(itemData);
+        $.ajax({
+            type: "POST",
+            url: '/register',
+            data: JSON.stringify(itemData),
+            dataType: 'json',
+            contentType: 'application/json'      
         })
-        .fail(function(error) {
-            console.log("It didnt post.", error);
-        });
+            .done(function(response) {
+                window.currentUser = response;
+                console.log("We have created a new user");
+                // navigate to profile page
+                document.location.href = '/profile.html';
+                
+            })
+            .fail(function(error) {
+                console.log("It didnt post.", error);
+            });
+    }    
 }
 
 // function will verify user login info that has been POSTed 
@@ -222,8 +245,8 @@ function addItem(userId) {
 function editItem (id) {
     // find the item being clicked on grocery list
     const item = window.fileList.find(users => users._id === id);
-    // collect all item names
-    
+    // grocery item variable to hide border
+    const itemBorder = document.getElementsByClassName('groceryItem');
     // if we find an item that matches the given id
     if (item) {
         // get the index value of item in groceryList array
@@ -234,38 +257,25 @@ function editItem (id) {
         let currentForm = editItemForm[itemIndex];
         // get the name of the item to be edited
         let currentItem = groceryItem[itemIndex];
-        
+        // if the item edit form is not already showing
         if (!currentForm.classList.contains('show-edit-form')) {
+            // place the current item name as a placeholder in the edit form
             $('.item-name-edit').val(item.itemName);
+            // show the edit form
             currentForm.classList.add('show-edit-form');
+            // hide the list item
             currentItem.style.display = 'none';
+            itemBorder[itemIndex].style.borderColor = 'transparent';
         } else {
+            // hide the edit form
             currentForm.classList.remove('show-edit-form');
+            // show the item name
             currentItem.style.display = 'inline-block';
+            itemBorder[itemIndex].style.borderColor = 'black';
         }
     }
 }    
-        // loop through all the edit forms
-    //     for (let i = 0; i < editItemForm.length; i++) {
-    //         // when we land on the item to be edited
-    //         if( i === itemIndex && !$(currentForm).hasClass('show-edit-form')) {
-    //             // give the empty input field of the edit form the value of item before it's edited
-    //             $('.item-name-edit').val(item.itemName);
-    //             // show the edit form
-    //             currentForm.classList.add('show-edit-form');
-    //             // hide the list item, allowing the edit form to sit in it's place
-    //             currentItem.style.display = 'none';
-    //         } else {
-    //             // hide all other edit forms
-    //             editItemForm[i].classList.remove('show-edit-form');
-    //             // show all other list items
-    //             groceryItem[i].style.display = "inline-block";
-                
-    //         }
-    //     }
-    //  }
-
-
+     
 // function allows user to modify(PUT) items in their list
 function updateItem(itemId) {
     // the item to be modified

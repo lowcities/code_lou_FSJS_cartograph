@@ -76,7 +76,7 @@ router.post('/register', function(req, res, next) {
 		req.body.name &&
 		req.body.password &&
 		req.body.confirmPassword) {
-
+          
 		//confirm that user typed same password twice
 		if (req.body.password !== req.body.confirmPassword) {
 			let err = new Error('Passwords do not match.');

@@ -35,7 +35,7 @@
                                 <h2>Lets make a shopping list.</h2>
                             </div>
                             <div id="list-container">
-                                <div id="add-item-form" class="relative-container">
+                                <div id="add-item-form" class="relative-container container-margin">
                                         <div class="blurred-bg"></div>
                                         <div class="overlay">
                                             <form class="add-item-form">
@@ -45,7 +45,7 @@
                                             </form>
                                         </div>
                                     </div>
-                                <div class="item-list">                           
+                                <div class="container-margin">                           
                                     <h2>{{name}}'s list so far...</h2>                            
                                     <div class="relative-container">
                                         <div class="blurred-bg"></div>
@@ -63,12 +63,8 @@
                                                                 </form>
                                                         </div>
                                                         <div class="col-4 edit-column">        
-                                                                
-                                                                    <img src="/img/pencil.png" class="pencil-icon" onclick="editItem('{{_id}}')">
-                                                                
-                                                                <span class="delete-btn" onclick="deleteItem('{{_id}}')">
-                                                                    X
-                                                                </span>
+                                                                <img src="/img/pencil.png" class="pencil-icon" onclick="editItem('{{_id}}')">
+                                                                <span class="delete-btn" onclick="deleteItem('{{_id}}')">X</span>
                                                             </li>
                                                         </div>
                                                     </div>
@@ -86,7 +82,7 @@
                     <div class="blurred-bg"></div>
                     <div class="overlay">
                         <footer>
-                            <p>David Low 2017</p>
+                            <p>&copy; 2017 David Low</p>
                         </footer>
                     </div>
                 </div>
