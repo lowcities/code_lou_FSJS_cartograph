@@ -13,9 +13,11 @@ Follow these instructions to get the app up and running on your local machine fo
 ### Prerequisites
 
 To run on local machine the following software will need to be installed:
-	- NPM
-	- Node.JS
-	- mongoDB
+	```
+	NPM
+	Node.JS
+	MongoDB
+	```
 
 #### Installing
 	Once all project files and Prerequisite software has been downloaded.
