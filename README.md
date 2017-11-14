@@ -19,7 +19,7 @@ To run on local machine the following software will need to be installed:
 	MongoDB
 	```
 
-#### Installing
+### Installing
 	Once all project files and Prerequisite software has been downloaded.
 	1. Open a new terminal window(MAC)
 	2. Navigate to the project folder with in the terminal
@@ -50,4 +50,4 @@ To run on local machine the following software will need to be installed:
 	ES6 and JQuery
 
 ## Author
-	David Low | www.lowcites.com | @lowcites
+	David Low | (www.lowcites.com) | @lowcites

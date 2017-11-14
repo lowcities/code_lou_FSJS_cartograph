@@ -69,7 +69,7 @@ footer p {
     z-index: 98;
 }
 .footer-lock {
-    min-height: calc( 100vh - 50px );
+    min-height: calc( 100vh );
 }
 .container-margin {
     margin: 10% 5%;
@@ -361,7 +361,10 @@ button:hover {
     .blue-txt {
         font-size: 3.8rem;
     }
-   
+    .login-Btn {
+        font-size: 1rem;
+        padding: 1%;
+    }
     input {
         border-color: white;
         color: white;
