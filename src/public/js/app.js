@@ -13,6 +13,7 @@ const editItemForm = document.getElementsByClassName('item-edit-form');
 const introContainer = document.getElementById('intro-container');
 const groceryListItem = document.getElementsByClassName('show-edit');
 const groceryItem = document.getElementsByClassName('item-name');
+
 let isActive = false;
 
 // loads register form to the main window
@@ -65,8 +66,8 @@ function showEdit() {
             if ( !$(groupLi[currentItemIndex]).hasClass('active') ) {
                 // show edit tools
                 $(groupLi[currentItemIndex]).addClass('active');
-                // if screen width is less than 767 px
-                if (window.innerWidth < 767) {
+                // if screen width is less than 767px or greater than 1024px
+                if (window.innerWidth < 767 || window.innerWidth >= 1024) {
                     // move list item to the left
                     $(itemArray[currentItemIndex]).addClass('active-edit');
                 }
@@ -357,6 +358,8 @@ function renderUser() {
     console.log('renderUser triggered');
     const source = $(profileSection).html();
     const template = Handlebars.compile(source);
+    let listSection; 
+    let addItemForm;
     console.log('renderUser triggered');
     getUser()
         .then(users => {
@@ -365,6 +368,7 @@ function renderUser() {
             window.itemList = users;
             window.fileList = users.groceryList;
             console.log(users.groceryList);
+            
             // Capitalize the user's name
             let userName = users.name[0].toUpperCase() + users.name.slice(1);
             const data = {
@@ -375,9 +379,16 @@ function renderUser() {
             
             const html = template(data);
             $(userContainer).html(html);
+            listSection = document.getElementById('list-section');
+            addItemForm = document.getElementById('add-item-form');
+            if (users.groceryList.length < 1) {
+                addItemForm.classList.remove('move-form');
+                listSection.classList.remove('show-list');
+            } else {
+                addItemForm.classList.add('move-form');
+                listSection.classList.add('show-list');
+            } 
             showEdit();
-            
-            
         });
 }
 

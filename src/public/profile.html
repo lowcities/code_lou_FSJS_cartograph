@@ -33,10 +33,11 @@
                             <div class="nameWelcome">
                                 <h2>Welcome {{name}}!<br></h2>
                                 <h2>Lets make a shopping list.</h2>
+                                <h3>Click item to edit</h2>
                             </div>
-                            <div id="list-container">
-                                <div id="add-item-form" class="relative-container container-margin">
-                                        <div class="blurred-bg"></div>
+                            <div id="list-container" class="list-container">
+                                <div id="add-item-form" class="relative-container container-margin add-item-container">
+                                    <div class="blurred-bg"></div>
                                         <div class="overlay">
                                             <form class="add-item-form">
                                                 <label for="itemName"></label>
@@ -44,9 +45,8 @@
                                                 <button type="button" id="add-item-button" class="add-item-btn" onclick="addItem('{{userId}}')">Add Item</button>
                                             </form>
                                         </div>
-                                    </div>
-                                <div class="container-margin">                           
-                                    <h2>{{name}}'s list so far...</h2>                            
+                                </div>
+                                <div id="list-section" class="container-margin list-section">                           
                                     <div class="relative-container">
                                         <div class="blurred-bg"></div>
                                         <div class="overlay">
