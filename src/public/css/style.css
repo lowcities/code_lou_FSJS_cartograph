@@ -3,9 +3,12 @@
 a:hover {
     text-decoration: none;
 }
+html {
+    height: 100vh;
+}
 body {
     background-color: whitesmoke;
-    min-height: 100vh;
+    position: relative;
 }
 header {
     background-color: rgba(150, 154, 149, 0.5);
@@ -30,6 +33,7 @@ footer {
     padding-top: 15px;
     position: relative;
     text-align: center;
+    width: 100%;
     z-index: 99;
 }
 footer p {
@@ -69,10 +73,11 @@ footer p {
     top: 0; left: 0; 
     position: relative;
     width: 100%;
+    height: auto;
     z-index: 98;
 }
 .footer-lock {
-    min-height: calc( 100vh );
+    min-height: calc(100vh - 50px);
 }
 .container-margin {
     margin: 10% 5%;
