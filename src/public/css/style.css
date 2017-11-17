@@ -12,11 +12,11 @@ body {
 }
 header {
     background-color: rgba(150, 154, 149, 0.5);
-    margin: 0 0 20% 0;
+    margin-bottom: 5%;
     padding: 35px 0;
 }
 
-h1, h2, h3, h5, p {
+h1, h2, h3, h4, h5, p {
     font-family: 'Righteous', cursive;
     color: white;
     margin: 0;
@@ -93,7 +93,7 @@ input {
     background-color: transparent;
     border: 0;
     border-bottom: 1px solid white;
-    color: black;
+    color: white;
     display: block;
     font-size: 1.2rem;
     letter-spacing: -1px;
@@ -252,11 +252,20 @@ button:hover {
     text-align: center;
 }
 .nameWelcome h2 {
-    font-size: 1.5rem;
+    font-size: 2.1rem;
+}
+.nameWelcome h4 {
+    font-size: 1.1rem;
 }
 .list-container {
     margin: 10% 5%;
     
+}
+.list-section {
+    opacity: 0;
+}
+.show-list {
+    opacity: 1;
 }
 .itemName {
     display: inline-block;
@@ -276,6 +285,8 @@ button:hover {
 }
 .relative-container {
     background-color: rgba(150, 154, 149, 0.5);
+    box-shadow: 2px 6px 0 rgba(0, 0, 0, 0.3);
+    overflow: hidden;
     position: relative;
 }
 .blurred-bg {
@@ -341,7 +352,8 @@ button:hover {
     background-color: rgba(150, 154, 149, 0.5);
     padding: 1rem;
     list-style: none;
-    margin-top: 20px;
+    /* margin-top: 20px; */
+    margin: 0;
     overflow-x: hidden;
     position: relative;
     z-index: 99;
@@ -354,9 +366,19 @@ button:hover {
     border-bottom: 1px solid black;
     color: white;
     font-family: 'Righteous', sans-serif;
-    font-size: 1.4rem;
+    font-size: 1rem;
     letter-spacing: 1px;
+    margin-top: 10px;
     width: 100%;
+}
+.item-name {
+    transform: translateY(0);
+    transition: all .3s ease-in-out;
+}
+.item-name:hover {
+    transform: translateY(-6px);
+    color: rgb(151, 213, 242);
+    font-size: 1.3rem;
 }
 .list-group-item:hover {
     background-color: rgba(48, 148, 151, 0.4);
@@ -402,13 +424,14 @@ button:hover {
             transform: translate(0);
 }
 .pencil-icon {
+    margin-bottom: 5px;
     margin-right: 10px;
     width: 20px;
-    padding: 2px;
     text-align: left;
 }
 .delete-btn {
     color: red;
+    font-size: 1.4rem;
     font-weight: bolder;
     width: 20px;
     -webkit-transition: all 100ms ease;
@@ -426,7 +449,6 @@ button:hover {
 
     header {
         padding: 5% 0;
-        margin-bottom: 5%;
     }
     .title h1 {
         font-size: 4rem;
@@ -447,16 +469,22 @@ button:hover {
         font-size: 1rem;
         padding: 1%;
     }
-    input {
-        border-color: white;
-        color: white;
-    }
     .nameWelcome h2 {
-        font-size: 2rem;
+        font-size: 3rem;
+    }
+    .nameWelcome h4 {
+        font-size: 1.7rem;
     }
     .list-container,
     .container-margin {
         margin-top: 2%;
+    }
+    .groceryItem {
+        font-size: 1.4rem;
+        margin-top: 0;
+    }
+    .item-name:hover {
+        font-size: 1.7rem;
     }
     .edit-column {
         width: 100px;
@@ -472,12 +500,11 @@ button:hover {
         margin: 0 auto;
     }
     .list-container {
-        margin: 10% 10%;
+        margin: 6% 10%;
     }
     .list-section {
         display: inline-block;
-        margin: 0 5%;
-        opacity: 0;        
+        margin: 0 5%;        
         width: 50%;
     }
     .groceryList {
@@ -487,8 +514,6 @@ button:hover {
         float: left;
         margin: 0 5%;
     }
-    .show-list {
-        opacity: 1;
-    }
+    
 
 }
