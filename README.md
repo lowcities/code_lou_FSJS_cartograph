@@ -43,4 +43,4 @@ at the top right of the page to end your session.
 3. JQuery
 
 ## Author
-David Low | www.lowcites.com | @lowcites
+David Low | lowcites.com | @lowcites
