@@ -14,9 +14,9 @@ Follow these instructions to get the app up and running on your local machine fo
 
 To run on local machine the following software will need to be installed:
 	
-NPM
-Node.JS
-MongoDB
+1. NPM
+2. Node.JS
+3. MongoDB
 	
 
 ### Installing
@@ -38,8 +38,9 @@ will allow you to delete the item. Once you are done making your list, click the
 at the top right of the page to end your session.
 
 ## Built with
-Handlebars.JS
-ES6 and JQuery
+1. Handlebars.JS
+2. ES6  
+3. JQuery
 
 ## Author
 David Low | www.lowcites.com | @lowcites
